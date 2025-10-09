@@ -62,9 +62,9 @@ const FunctionalPresentation = () => {
                             <h4 className="font-bold text-green-700 mb-3">Приклад власного FI</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div>@FunctionalInterface</div>
-                                <div>public interface Calculator &#123;</div>
+                                <div>public interface Calculator {'{'}</div>
                                 <div className="ml-4">int calculate(int a, int b);</div>
-                                <div>&#125;</div>
+                                <div>{'}'}</div>
                             </div>
                         </div>
 
@@ -73,10 +73,10 @@ const FunctionalPresentation = () => {
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div className="text-red-600">{'// Два методи - помилка!'}</div>
                                 <div>@FunctionalInterface</div>
-                                <div>public interface Wrong&#123;</div>
+                                <div>public interface Wrong {'{'}</div>
                                 <div className="ml-4">int method1();</div>
                                 <div className="ml-4">int method2();</div>
-                                <div>&#125;</div>
+                                <div>{'}'}</div>
                             </div>
                         </div>
                     </div>
@@ -103,12 +103,22 @@ const FunctionalPresentation = () => {
                         <div className="bg-white p-4 rounded text-sm space-y-2">
                             <div className="text-blue-600">{'// Без параметрів'}</div>
                             <div className="font-mono">() -&gt; System.out.println("Hello")</div>
-                            <div className="mt-3 text-blue-600">{'// Один параметр'}</div>
+
+                            <div className="mt-3 text-blue-600">{'// Один параметр (дужки можна опустити)'}</div>
                             <div className="font-mono">x -&gt; x * x</div>
-                            <div className="mt-3 text-blue-600">{'// Кілька параметрів'}</div>
+
+                            <div className="mt-3 text-blue-600">{'// Кілька параметрів - один вираз'}</div>
                             <div className="font-mono">(x, y) -&gt; x + y</div>
-                            <div className="mt-3 text-blue-600">{'// Блок коду'}</div>
-                            <div className="font-mono">(x, y) -&gt; return x + y;</div>
+
+                            <div className="mt-3 text-blue-600">{'// Кілька параметрів - один вираз з return'}</div>
+                            <div className="font-mono">(x, y) -&gt; {'{ return x + y; }'}</div>
+
+                            <div className="mt-3 text-blue-600">{'// Блок коду з фігурними дужками'}</div>
+                            <div className="font-mono">(x, y) -&gt; {'{'}</div>
+                            <div className="font-mono ml-4">int result = x + y;</div>
+                            <div className="font-mono ml-4">System.out.println("Результат: " + result);</div>
+                            <div className="font-mono ml-4">return result;</div>
+                            <div className="font-mono">{'}'}</div>
                         </div>
                     </div>
 
@@ -138,10 +148,40 @@ const FunctionalPresentation = () => {
                         <div className="bg-white p-4 rounded font-mono text-xs space-y-2">
                             <div className="text-blue-600">{'// Сортування'}</div>
                             <div>names.sort((a, b) -&gt; a.compareTo(b));</div>
+
                             <div className="mt-3 text-blue-600">{'// Runnable'}</div>
                             <div>new Thread(() -&gt; println("Hello")).start();</div>
+
                             <div className="mt-3 text-blue-600">{'// Власний FI'}</div>
                             <div>Calculator add = (a, b) -&gt; a + b;</div>
+                        </div>
+                    </div>
+
+                    <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-400">
+                        <h4 className="font-bold text-yellow-700 mb-3">⚠️ Lambda та змінні: final або effectively final</h4>
+                        <div className="text-sm text-gray-700 mb-2">
+                            Lambda може використовувати лише змінні, які <strong>не змінюються</strong> після ініціалізації.
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                            <div className="bg-green-50 p-2 rounded border border-green-300">
+                                <div className="text-green-600 font-bold text-xs mb-1">✓ Працює</div>
+                                <div className="bg-white p-2 rounded font-mono text-xs">
+                                    <div>Set&lt;String&gt; seen = new HashSet&lt;&gt;();</div>
+                                    <div>list.removeIf(s -&gt; !seen.add(s));</div>
+                                    <div className="text-gray-500 mt-1">{'// seen не перезаписується'}</div>
+                                </div>
+                            </div>
+                            <div className="bg-red-50 p-2 rounded border border-red-300">
+                                <div className="text-red-600 font-bold text-xs mb-1">✗ Не працює</div>
+                                <div className="bg-white p-2 rounded font-mono text-xs">
+                                    <div>int counter = 0;</div>
+                                    <div>list.forEach(s -&gt; counter++);</div>
+                                    <div className="text-gray-500 mt-1">{'// counter змінюється!'}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mt-2 text-xs text-gray-600">
+                            💡 Можна змінювати <strong>вміст</strong> об'єкта (seen.add()), але не саму змінну (seen = ...)
                         </div>
                     </div>
                 </div>
@@ -210,11 +250,11 @@ const FunctionalPresentation = () => {
             )
         },
         {
-            title: "Consumer T",
+            title: "Consumer<T>",
             content: (
                 <div className="space-y-6">
                     <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white p-4 rounded-lg">
-                        <h3 className="text-2xl font-bold">Consumer T</h3>
+                        <h3 className="text-2xl font-bold">Consumer&lt;T&gt;</h3>
                         <p className="text-sm mt-1">Споживає (приймає) значення, нічого не повертає</p>
                     </div>
 
@@ -222,10 +262,11 @@ const FunctionalPresentation = () => {
                         <h4 className="font-bold text-green-700 mb-3">Визначення</h4>
                         <div className="bg-white p-4 rounded font-mono text-sm">
                             <div>@FunctionalInterface</div>
-                            <div>public interface Consumer T</div>
+                            <div>public interface Consumer&lt;T&gt; {'{'}</div>
                             <div className="ml-4">void accept(T t);</div>
                             <div className="mt-2 ml-4 text-gray-500">{'// Метод для ланцюжка'}</div>
-                            <div className="ml-4">default Consumer andThen(...)</div>
+                            <div className="ml-4">default Consumer&lt;T&gt; andThen(...)</div>
+                            <div>{'}'}</div>
                         </div>
                     </div>
 
@@ -234,14 +275,14 @@ const FunctionalPresentation = () => {
                             <h4 className="font-bold text-blue-700 mb-3">Базове використання</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div className="text-blue-600">{'// Виведення в консоль'}</div>
-                                <div>Consumer String printer = </div>
+                                <div>Consumer&lt;String&gt; printer = </div>
                                 <div className="ml-4">s -&gt; System.out.println(s);</div>
                                 <div>printer.accept("Hello");</div>
                                 <div className="mt-3 text-blue-600">{'// Method reference'}</div>
-                                <div>Consumer String printer2 = </div>
+                                <div>Consumer&lt;String&gt; printer2 = </div>
                                 <div className="ml-4">System.out::println;</div>
                                 <div className="mt-3 text-blue-600">{'// З forEach'}</div>
-                                <div>List String list = ...</div>
+                                <div>List&lt;String&gt; list = ...</div>
                                 <div>list.forEach(System.out::println);</div>
                             </div>
                         </div>
@@ -250,13 +291,13 @@ const FunctionalPresentation = () => {
                             <h4 className="font-bold text-purple-700 mb-3">Ланцюжок Consumer</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div className="text-blue-600">{'// Композиція через andThen'}</div>
-                                <div>Consumer String c1 = </div>
+                                <div>Consumer&lt;String&gt; c1 = </div>
                                 <div className="ml-4">s -&gt; System.out.print(s);</div>
-                                <div>Consumer String c2 = </div>
+                                <div>Consumer&lt;String&gt; c2 = </div>
                                 <div className="ml-4">s -&gt; System.out.print(" - ");</div>
-                                <div>Consumer String c3 = </div>
+                                <div>Consumer&lt;String&gt; c3 = </div>
                                 <div className="ml-4">s -&gt; System.out.println(s.length());</div>
-                                <div className="mt-2">Consumer String chain = </div>
+                                <div className="mt-2">Consumer&lt;String&gt; chain = </div>
                                 <div className="ml-4">c1.andThen(c2).andThen(c3);</div>
                                 <div className="mt-2">chain.accept("Hello");</div>
                                 <div className="text-gray-500">{'// Виведе: Hello - 5'}</div>
@@ -265,14 +306,14 @@ const FunctionalPresentation = () => {
                     </div>
 
                     <div className="bg-orange-50 p-5 rounded-lg">
-                        <h4 className="font-bold text-orange-700 mb-3">BiConsumer T,U - два параметри</h4>
+                        <h4 className="font-bold text-orange-700 mb-3">BiConsumer&lt;T,U&gt; - два параметри</h4>
                         <div className="bg-white p-4 rounded font-mono text-xs">
                             <div className="text-blue-600">{'// Приймає два параметри'}</div>
-                            <div>BiConsumer String, Integer printer = </div>
+                            <div>BiConsumer&lt;String, Integer&gt; printer = </div>
                             <div className="ml-4">(name, age) -&gt; println(name + " is " + age);</div>
                             <div>printer.accept("John", 25);</div>
                             <div className="mt-3 text-blue-600">{'// Використання з Map'}</div>
-                            <div>Map String, Integer map = ...</div>
+                            <div>Map&lt;String, Integer&gt; map = ...</div>
                             <div>map.forEach((lang, year) -&gt; </div>
                             <div className="ml-4">println(lang + ": " + year));</div>
                         </div>
@@ -287,11 +328,11 @@ const FunctionalPresentation = () => {
             )
         },
         {
-            title: "Supplier T",
+            title: "Supplier<T>",
             content: (
                 <div className="space-y-6">
                     <div className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white p-4 rounded-lg">
-                        <h3 className="text-2xl font-bold">Supplier T</h3>
+                        <h3 className="text-2xl font-bold">Supplier&lt;T&gt;</h3>
                         <p className="text-sm mt-1">Постачає (створює) значення, нічого не приймає</p>
                     </div>
 
@@ -299,8 +340,9 @@ const FunctionalPresentation = () => {
                         <h4 className="font-bold text-blue-700 mb-3">Визначення</h4>
                         <div className="bg-white p-4 rounded font-mono text-sm">
                             <div>@FunctionalInterface</div>
-                            <div>public interface Supplier T</div>
+                            <div>public interface Supplier&lt;T&gt; {'{'}</div>
                             <div className="ml-4">T get();</div>
+                            <div>{'}'}</div>
                         </div>
                     </div>
 
@@ -309,14 +351,14 @@ const FunctionalPresentation = () => {
                             <h4 className="font-bold text-green-700 mb-3">Базове використання</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div className="text-blue-600">{'// Генерація значень'}</div>
-                                <div>Supplier Double randomSupplier = </div>
+                                <div>Supplier&lt;Double&gt; randomSupplier = </div>
                                 <div className="ml-4">() -&gt; Math.random();</div>
                                 <div>Double value = randomSupplier.get();</div>
                                 <div className="mt-3 text-blue-600">{'// Постачання об\'єктів'}</div>
-                                <div>Supplier String stringSupplier = </div>
+                                <div>Supplier&lt;String&gt; stringSupplier = </div>
                                 <div className="ml-4">() -&gt; "Hello World";</div>
                                 <div className="mt-3 text-blue-600">{'// Method reference'}</div>
-                                <div>Supplier List listSupplier = </div>
+                                <div>Supplier&lt;List&lt;String&gt;&gt; listSupplier = </div>
                                 <div className="ml-4">ArrayList::new;</div>
                             </div>
                         </div>
@@ -325,9 +367,10 @@ const FunctionalPresentation = () => {
                             <h4 className="font-bold text-purple-700 mb-3">Lazy обчислення</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div className="text-blue-600">{'// Відкладені обчислення'}</div>
-                                <div>public String expensiveOperation()</div>
+                                <div>public String expensiveOperation() {'{'}</div>
                                 <div className="ml-4">System.out.println("Expensive!");</div>
                                 <div className="ml-4">return "Result";</div>
+                                <div>{'}'}</div>
                                 <div className="mt-2 text-blue-600">{'// Без Supplier - завжди'}</div>
                                 <div>logger.log(expensiveOperation());</div>
                                 <div className="mt-2 text-blue-600">{'// З Supplier - тільки якщо потрібно'}</div>
@@ -340,9 +383,10 @@ const FunctionalPresentation = () => {
                         <h4 className="font-bold text-orange-700 mb-3">Практичні приклади</h4>
                         <div className="bg-white p-4 rounded font-mono text-xs">
                             <div className="text-blue-600">{'// Factory pattern'}</div>
-                            <div>class UserFactory</div>
-                            <div className="ml-4">public static Supplier User adminSupplier = </div>
+                            <div>class UserFactory {'{'}</div>
+                            <div className="ml-4">public static Supplier&lt;User&gt; adminSupplier = </div>
                             <div className="ml-8">() -&gt; new User("admin", Role.ADMIN);</div>
+                            <div>{'}'}</div>
                             <div className="mt-2">User admin = UserFactory.adminSupplier.get();</div>
                         </div>
                     </div>
@@ -356,11 +400,139 @@ const FunctionalPresentation = () => {
             )
         },
         {
-            title: "Function T,R",
+            title: "Lazy обчислення: Практичні приклади",
+            content: (
+                <div className="space-y-6">
+                    <div className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white p-4 rounded-lg">
+                        <h3 className="text-2xl font-bold">Supplier&lt;T&gt; для Lazy Evaluation</h3>
+                        <p className="text-sm mt-1">Відкладене виконання до моменту, коли дійсно потрібно!</p>
+                    </div>
+
+                    <div className="bg-teal-50 p-5 rounded-lg border-l-4 border-teal-500">
+                        <h4 className="font-bold text-teal-700 mb-3">Що таке Lazy обчислення?</h4>
+                        <div className="grid grid-cols-2 gap-3">
+                            <div className="bg-red-50 p-3 rounded border border-red-300">
+                                <strong className="text-red-600">❌ Eager (жадібне)</strong>
+                                <div className="text-sm text-gray-700 mt-1">Виконується ЗАВЖДИ одразу</div>
+                            </div>
+                            <div className="bg-green-50 p-3 rounded border border-green-300">
+                                <strong className="text-green-600">✓ Lazy (ледаче)</strong>
+                                <div className="text-sm text-gray-700 mt-1">Виконується ТІЛЬКИ коли потрібно</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="bg-blue-50 p-5 rounded-lg">
+                            <h4 className="font-bold text-blue-700 mb-3">1. Відкладена ініціалізація</h4>
+                            <div className="bg-white p-3 rounded font-mono text-xs">
+                                <div className="text-blue-600">{'// З\'єднання створюється пізніше'}</div>
+                                <div>class DatabaseConnection {'{'}</div>
+                                <div className="ml-4">private Connection conn;</div>
+                                <div className="ml-4">private Supplier&lt;Connection&gt; supplier;</div>
+                                <div className="mt-2 ml-4">public Connection getConnection() {'{'}</div>
+                                <div className="ml-8">if (conn == null) {'{'}</div>
+                                <div className="ml-12 text-green-600">{'// Тільки тут створюється!'}</div>
+                                <div className="ml-12">conn = supplier.get();</div>
+                                <div className="ml-8">{'}'}</div>
+                                <div className="ml-8">return conn;</div>
+                                <div className="ml-4">{'}'}</div>
+                                <div>{'}'}</div>
+                            </div>
+                        </div>
+
+                        <div className="bg-purple-50 p-5 rounded-lg">
+                            <h4 className="font-bold text-purple-700 mb-3">2. Optional з lazy default</h4>
+                            <div className="bg-white p-3 rounded font-mono text-xs">
+                                <div className="text-red-600">{'// ❌ Завжди створює User'}</div>
+                                <div>User user = repo.findById(id)</div>
+                                <div className="ml-4">.orElse(createDefaultUser());</div>
+                                <div className="mt-3 text-green-600">{'// ✓ Створює тільки якщо потрібно'}</div>
+                                <div>User user = repo.findById(id)</div>
+                                <div className="ml-4">.orElseGet(() -&gt; </div>
+                                <div className="ml-8">createDefaultUser());</div>
+                                <div className="mt-2 text-gray-500">{'// Якщо Optional не порожній,'}</div>
+                                <div className="text-gray-500">{'// createDefaultUser() НЕ викличеться!'}</div>
+                            </div>
+                        </div>
+
+                        <div className="bg-orange-50 p-5 rounded-lg">
+                            <h4 className="font-bold text-orange-700 mb-3">3. UI з можливістю скасування</h4>
+                            <div className="bg-white p-3 rounded font-mono text-xs">
+                                <div>class ReportGenerator {'{'}</div>
+                                <div className="ml-4">void showReport(</div>
+                                <div className="ml-8">Supplier&lt;String&gt; reportSupplier) {'{'}</div>
+                                <div className="ml-4 mt-2">showLoadingSpinner();</div>
+                                <div className="ml-4 mt-2">if (userClickedCancel()) {'{'}</div>
+                                <div className="ml-8 text-green-600">{'// Звіт НЕ генерується!'}</div>
+                                <div className="ml-8">return;</div>
+                                <div className="ml-4">{'}'}</div>
+                                <div className="ml-4 mt-2 text-green-600">{'// Тільки тут генерується'}</div>
+                                <div className="ml-4">String report = reportSupplier.get();</div>
+                                <div className="ml-4">displayReport(report);</div>
+                                <div>{'}'}</div>
+                            </div>
+                        </div>
+
+                        <div className="bg-green-50 p-5 rounded-lg">
+                            <h4 className="font-bold text-green-700 mb-3">4. Фабрика об'єктів</h4>
+                            <div className="bg-white p-3 rounded font-mono text-xs">
+                                <div>class GameObjectFactory {'{'}</div>
+                                <div className="ml-4">Map&lt;String, Supplier&lt;GameObject&gt;&gt;</div>
+                                <div className="ml-8">creators = new HashMap&lt;&gt;();</div>
+                                <div className="mt-2 ml-4">public GameObjectFactory() {'{'}</div>
+                                <div className="ml-8 text-gray-500">{'// Реєструємо, НЕ створюємо'}</div>
+                                <div className="ml-8">creators.put("enemy", </div>
+                                <div className="ml-12">() -&gt; new Enemy());</div>
+                                <div className="ml-8">creators.put("coin", </div>
+                                <div className="ml-12">() -&gt; new Coin());</div>
+                                <div className="ml-4">{'}'}</div>
+                                <div className="mt-2 ml-4">GameObject create(String type) {'{'}</div>
+                                <div className="ml-8 text-green-600">{'// Створюється тільки тут!'}</div>
+                                <div className="ml-8">return creators.get(type).get();</div>
+                                <div className="ml-4">{'}'}</div>
+                                <div>{'}'}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-indigo-50 p-5 rounded-lg">
+                        <h4 className="font-bold text-indigo-700 mb-3">5. Stream з нескінченними послідовностями</h4>
+                        <div className="bg-white p-4 rounded font-mono text-xs">
+                            <div className="text-blue-600">{'// Генератор Фібоначчі - без Supplier неможливо!'}</div>
+                            <div>Stream&lt;Integer&gt; fibonacci = Stream.generate(new Supplier&lt;Integer&gt;() {'{'}</div>
+                            <div className="ml-4">private int prev = 0, current = 1;</div>
+                            <div className="ml-4">public Integer get() {'{'}</div>
+                            <div className="ml-8">int next = prev + current;</div>
+                            <div className="ml-8">prev = current;</div>
+                            <div className="ml-8">current = next;</div>
+                            <div className="ml-8">return prev;</div>
+                            <div className="ml-4">{'}'}</div>
+                            <div>{'}).'}</div>
+                            <div className="mt-2 text-gray-500">{'// Числа генеруються ТІЛЬКИ коли їх беруть'}</div>
+                            <div>fibonacci.limit(10).forEach(System.out::println);</div>
+                        </div>
+                    </div>
+
+                    <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-400">
+                        <h4 className="font-bold text-yellow-700 mb-2">💡 Коли використовувати Lazy?</h4>
+                        <ul className="space-y-1 text-sm text-gray-700">
+                            <li>✓ Операція дорога (повільна, багато пам'яті)</li>
+                            <li>✓ Може не знадобитися (умовне виконання)</li>
+                            <li>✓ Відкладена ініціалізація ресурсів</li>
+                            <li>✓ Нескінченні послідовності в Stream</li>
+                            <li>✓ Економія ресурсів та продуктивності!</li>
+                        </ul>
+                    </div>
+                </div>
+            )
+        },
+        {
+            title: "Function<T,R>",
             content: (
                 <div className="space-y-6">
                     <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-lg">
-                        <h3 className="text-2xl font-bold">Function T,R</h3>
+                        <h3 className="text-2xl font-bold">Function&lt;T,R&gt;</h3>
                         <p className="text-sm mt-1">Приймає T, повертає R - перетворення типів</p>
                     </div>
 
@@ -368,11 +540,12 @@ const FunctionalPresentation = () => {
                         <h4 className="font-bold text-purple-700 mb-3">Визначення</h4>
                         <div className="bg-white p-4 rounded font-mono text-sm">
                             <div>@FunctionalInterface</div>
-                            <div>public interface Function T, R</div>
+                            <div>public interface Function&lt;T, R&gt; {'{'}</div>
                             <div className="ml-4">R apply(T t);</div>
                             <div className="mt-2 ml-4 text-gray-500">{'// Композиція функцій'}</div>
-                            <div className="ml-4">default Function andThen(...)</div>
-                            <div className="ml-4">default Function compose(...)</div>
+                            <div className="ml-4">default Function&lt;T,R&gt; andThen(...)</div>
+                            <div className="ml-4">default Function&lt;T,R&gt; compose(...)</div>
+                            <div>{'}'}</div>
                         </div>
                     </div>
 
@@ -380,40 +553,73 @@ const FunctionalPresentation = () => {
                         <div className="bg-blue-50 p-5 rounded-lg">
                             <h4 className="font-bold text-blue-700 mb-3">Базове використання</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
-                                <div className="text-blue-600">{'// String -&gt; Integer'}</div>
-                                <div>Function String, Integer strLength = </div>
+                                <div className="text-blue-600">{'// String -> Integer'}</div>
+                                <div>Function&lt;String, Integer&gt; strLength = </div>
                                 <div className="ml-4">s -&gt; s.length();</div>
-                                <div>Function String, Integer strLength2 = </div>
+                                <div>Function&lt;String, Integer&gt; strLength2 = </div>
                                 <div className="ml-4">String::length;</div>
                                 <div>Integer len = strLength.apply("Hello");</div>
                                 <div className="text-gray-500">{'// 5'}</div>
-                                <div className="mt-3 text-blue-600">{'// Integer -&gt; String'}</div>
-                                <div>Function Integer, String intToStr = </div>
+                                <div className="mt-3 text-blue-600">{'// Integer -> String'}</div>
+                                <div>Function&lt;Integer, String&gt; intToStr = </div>
                                 <div className="ml-4">i -&gt; "Number: " + i;</div>
                             </div>
                         </div>
 
                         <div className="bg-green-50 p-5 rounded-lg">
-                            <h4 className="font-bold text-green-700 mb-3">Композиція функцій</h4>
+                            <h4 className="font-bold text-green-700 mb-3">andThen - "а потім"</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div className="text-blue-600">{'// andThen: f.andThen(g) = g(f(x))'}</div>
-                                <div>Function Integer, Integer multiplyBy2 = </div>
+                                <div className="text-blue-600">{'// Виконання зліва направо →'}</div>
+                                <div>Function&lt;Integer, Integer&gt; multiplyBy2 = </div>
                                 <div className="ml-4">x -&gt; x * 2;</div>
-                                <div>Function Integer, Integer add3 = </div>
+                                <div>Function&lt;Integer, Integer&gt; add3 = </div>
                                 <div className="ml-4">x -&gt; x + 3;</div>
-                                <div className="mt-2">Function Integer, Integer combined = </div>
+                                <div className="mt-2">Function&lt;Integer, Integer&gt; combined = </div>
                                 <div className="ml-4">multiplyBy2.andThen(add3);</div>
                                 <div>combined.apply(5);</div>
+                                <div className="text-gray-500">{'// Спочатку *2, потім +3'}</div>
                                 <div className="text-gray-500">{'// (5*2)+3 = 13'}</div>
                             </div>
                         </div>
                     </div>
 
+                    <div className="bg-purple-50 p-5 rounded-lg mt-4">
+                        <h4 className="font-bold text-purple-700 mb-3">andThen vs compose - різниця в порядку!</h4>
+                        <div className="grid grid-cols-2 gap-3">
+                            <div className="bg-white p-3 rounded font-mono text-xs">
+                                <div className="text-green-600 font-bold mb-2">{'// andThen: зліва → направо'}</div>
+                                <div>Function&lt;Integer, Integer&gt; f = </div>
+                                <div className="ml-4">multiplyBy2.andThen(add3);</div>
+                                <div className="mt-2">f.apply(5);</div>
+                                <div className="text-gray-500">{'// 5 → *2 → +3'}</div>
+                                <div className="text-gray-500">{'// 5 → 10 → 13'}</div>
+                                <div className="mt-2 text-green-600">{'// g(f(x))'}</div>
+                            </div>
+                            <div className="bg-white p-3 rounded font-mono text-xs">
+                                <div className="text-orange-600 font-bold mb-2">{'// compose: справа ← наліво'}</div>
+                                <div>Function&lt;Integer, Integer&gt; f = </div>
+                                <div className="ml-4">multiplyBy2.compose(add3);</div>
+                                <div className="mt-2">f.apply(5);</div>
+                                <div className="text-gray-500">{'// 5 → +3 → *2'}</div>
+                                <div className="text-gray-500">{'// 5 → 8 → 16'}</div>
+                                <div className="mt-2 text-orange-600">{'// f(g(x))'}</div>
+                            </div>
+                        </div>
+                        <div className="mt-3 p-3 bg-yellow-50 rounded border border-yellow-300">
+                            <p className="text-sm text-gray-700">
+                                <strong>andThen</strong> читається природно (зліва направо), 
+                                <strong> compose</strong> - математична нотація (справа наліво). 
+                                На практиці <strong>andThen</strong> використовується частіше!
+                            </p>
+                        </div>
+                    </div>
+
                     <div className="bg-orange-50 p-5 rounded-lg">
-                        <h4 className="font-bold text-orange-700 mb-3">BiFunction T,U,R - два параметри</h4>
+                        <h4 className="font-bold text-orange-700 mb-3">BiFunction&lt;T,U,R&gt; - два параметри</h4>
                         <div className="bg-white p-4 rounded font-mono text-xs">
                             <div className="text-blue-600">{'// Приймає два параметри, повертає результат'}</div>
-                            <div>BiFunction Integer, Integer, Integer add = </div>
+                            <div>BiFunction&lt;Integer, Integer, Integer&gt; add = </div>
                             <div className="ml-4">(a, b) -&gt; a + b;</div>
                             <div>Integer sum = add.apply(5, 3);</div>
                             <div className="text-gray-500">{'// 8'}</div>
@@ -421,14 +627,14 @@ const FunctionalPresentation = () => {
                     </div>
 
                     <div className="bg-indigo-50 p-5 rounded-lg">
-                        <h4 className="font-bold text-indigo-700 mb-3">UnaryOperator T та BinaryOperator T</h4>
+                        <h4 className="font-bold text-indigo-700 mb-3">UnaryOperator&lt;T&gt; та BinaryOperator&lt;T&gt;</h4>
                         <div className="bg-white p-4 rounded font-mono text-xs">
-                            <div className="text-blue-600">{'// UnaryOperator: T -&gt; T'}</div>
-                            <div>UnaryOperator Integer square = x -&gt; x * x;</div>
+                            <div className="text-blue-600">{'// UnaryOperator: T -> T'}</div>
+                            <div>UnaryOperator&lt;Integer&gt; square = x -&gt; x * x;</div>
                             <div>Integer result = square.apply(5);</div>
                             <div className="text-gray-500">{'// 25'}</div>
-                            <div className="mt-3 text-blue-600">{'// BinaryOperator: (T,T) -&gt; T'}</div>
-                            <div>BinaryOperator Integer max = </div>
+                            <div className="mt-3 text-blue-600">{'// BinaryOperator: (T,T) -> T'}</div>
+                            <div>BinaryOperator&lt;Integer&gt; max = </div>
                             <div className="ml-4">(a, b) -&gt; a &gt; b ? a : b;</div>
                             <div>Integer maxVal = max.apply(10, 20);</div>
                             <div className="text-gray-500">{'// 20'}</div>
@@ -444,11 +650,11 @@ const FunctionalPresentation = () => {
             )
         },
         {
-            title: "Predicate T",
+            title: "Predicate<T>",
             content: (
                 <div className="space-y-6">
                     <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white p-4 rounded-lg">
-                        <h3 className="text-2xl font-bold">Predicate T</h3>
+                        <h3 className="text-2xl font-bold">Predicate&lt;T&gt;</h3>
                         <p className="text-sm mt-1">Приймає T, повертає boolean - умови та фільтрація</p>
                     </div>
 
@@ -456,12 +662,13 @@ const FunctionalPresentation = () => {
                         <h4 className="font-bold text-orange-700 mb-3">Визначення</h4>
                         <div className="bg-white p-4 rounded font-mono text-sm">
                             <div>@FunctionalInterface</div>
-                            <div>public interface Predicate T</div>
+                            <div>public interface Predicate&lt;T&gt; {'{'}</div>
                             <div className="ml-4">boolean test(T t);</div>
                             <div className="mt-2 ml-4 text-gray-500">{'// Логічні операції'}</div>
-                            <div className="ml-4">default Predicate and(...)</div>
-                            <div className="ml-4">default Predicate or(...)</div>
-                            <div className="ml-4">default Predicate negate()</div>
+                            <div className="ml-4">default Predicate&lt;T&gt; and(...)</div>
+                            <div className="ml-4">default Predicate&lt;T&gt; or(...)</div>
+                            <div className="ml-4">default Predicate&lt;T&gt; negate()</div>
+                            <div>{'}'}</div>
                         </div>
                     </div>
 
@@ -476,10 +683,10 @@ const FunctionalPresentation = () => {
                                 <div className="text-gray-500">{'// true'}</div>
                                 <div>isPositive.test(-3);</div>
                                 <div className="text-gray-500">{'// false'}</div>
-                                <div className="mt-3">Predicate String isEmpty = </div>
+                                <div className="mt-3">Predicate&lt;String&gt; isEmpty = </div>
                                 <div className="ml-4">String::isEmpty;</div>
                                 <div className="mt-3 text-blue-600">{'// Фільтрація колекцій'}</div>
-                                <div>List Integer numbers = ...</div>
+                                <div>List&lt;Integer&gt; numbers = ...</div>
                                 <div>numbers.removeIf(x -&gt; x &lt; 0);</div>
                                 <div className="text-gray-500">{'// Видалить негативні'}</div>
                             </div>
@@ -489,19 +696,19 @@ const FunctionalPresentation = () => {
                             <h4 className="font-bold text-green-700 mb-3">Логічні операції</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div className="text-blue-600">{'// AND - обидві умови'}</div>
-                                <div>Predicate Integer isPositive = </div>
+                                <div>Predicate&lt;Integer&gt; isPositive = </div>
                                 <div className="ml-4">x -&gt; x &gt; 0;</div>
-                                <div>Predicate Integer isEven = </div>
+                                <div>Predicate&lt;Integer&gt; isEven = </div>
                                 <div className="ml-4">x -&gt; x % 2 == 0;</div>
-                                <div className="mt-2">Predicate Integer positiveEven = </div>
+                                <div className="mt-2">Predicate&lt;Integer&gt; positiveEven = </div>
                                 <div className="ml-4">isPositive.and(isEven);</div>
                                 <div>positiveEven.test(4);</div>
                                 <div className="text-gray-500">{'// true'}</div>
                                 <div className="mt-3 text-blue-600">{'// OR - будь-яка'}</div>
-                                <div>Predicate Integer positiveOrEven = </div>
+                                <div>Predicate&lt;Integer&gt; positiveOrEven = </div>
                                 <div className="ml-4">isPositive.or(isEven);</div>
                                 <div className="mt-3 text-blue-600">{'// NEGATE - інверсія'}</div>
-                                <div>Predicate Integer isNegative = </div>
+                                <div>Predicate&lt;Integer&gt; isNegative = </div>
                                 <div className="ml-4">isPositive.negate();</div>
                             </div>
                         </div>
@@ -511,21 +718,22 @@ const FunctionalPresentation = () => {
                         <h4 className="font-bold text-purple-700 mb-3">Практичні приклади</h4>
                         <div className="bg-white p-4 rounded font-mono text-xs">
                             <div className="text-blue-600">{'// Валідація'}</div>
-                            <div>class UserValidator</div>
-                            <div className="ml-4">Predicate User hasValidEmail = </div>
+                            <div>class UserValidator {'{'}</div>
+                            <div className="ml-4">Predicate&lt;User&gt; hasValidEmail = </div>
                             <div className="ml-8">u -&gt; u.getEmail().contains("@");</div>
-                            <div className="ml-4">Predicate User isAdult = </div>
+                            <div className="ml-4">Predicate&lt;User&gt; isAdult = </div>
                             <div className="ml-8">u -&gt; u.getAge() &gt;= 18;</div>
-                            <div className="ml-4">Predicate User isValidUser = </div>
+                            <div className="ml-4">Predicate&lt;User&gt; isValidUser = </div>
                             <div className="ml-8">hasValidEmail.and(isAdult);</div>
+                            <div>{'}'}</div>
                         </div>
                     </div>
 
                     <div className="bg-pink-50 p-5 rounded-lg">
-                        <h4 className="font-bold text-pink-700 mb-3">BiPredicate T,U</h4>
+                        <h4 className="font-bold text-pink-700 mb-3">BiPredicate&lt;T,U&gt;</h4>
                         <div className="bg-white p-4 rounded font-mono text-xs">
                             <div className="text-blue-600">{'// Два параметри, повертає boolean'}</div>
-                            <div>BiPredicate String, Integer lengthEquals = </div>
+                            <div>BiPredicate&lt;String, Integer&gt; lengthEquals = </div>
                             <div className="ml-4">(s, len) -&gt; s.length() == len;</div>
                             <div>lengthEquals.test("Hello", 5);</div>
                             <div className="text-gray-500">{'// true'}</div>
@@ -576,10 +784,10 @@ const FunctionalPresentation = () => {
                             <h4 className="font-bold text-blue-700 mb-3">1. Static method reference</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div className="text-red-600">{'// Lambda'}</div>
-                                <div>Function String, Integer parser = </div>
+                                <div>Function&lt;String, Integer&gt; parser = </div>
                                 <div className="ml-4">s -&gt; Integer.parseInt(s);</div>
                                 <div className="mt-2 text-green-600">{'// Method reference'}</div>
-                                <div>Function String, Integer parser = </div>
+                                <div>Function&lt;String, Integer&gt; parser = </div>
                                 <div className="ml-4">Integer::parseInt;</div>
                             </div>
                         </div>
@@ -588,10 +796,10 @@ const FunctionalPresentation = () => {
                             <h4 className="font-bold text-green-700 mb-3">2. Instance method reference</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div className="text-red-600">{'// Lambda'}</div>
-                                <div>Consumer String printer = </div>
+                                <div>Consumer&lt;String&gt; printer = </div>
                                 <div className="ml-4">s -&gt; System.out.println(s);</div>
                                 <div className="mt-2 text-green-600">{'// Method reference'}</div>
-                                <div>Consumer String printer = </div>
+                                <div>Consumer&lt;String&gt; printer = </div>
                                 <div className="ml-4">System.out::println;</div>
                             </div>
                         </div>
@@ -600,12 +808,12 @@ const FunctionalPresentation = () => {
                             <h4 className="font-bold text-purple-700 mb-3">3. Instance method на параметрі</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div className="text-red-600">{'// Lambda'}</div>
-                                <div>Function String, Integer length = </div>
+                                <div>Function&lt;String, Integer&gt; length = </div>
                                 <div className="ml-4">s -&gt; s.length();</div>
                                 <div className="mt-2 text-green-600">{'// Method reference'}</div>
-                                <div>Function String, Integer length = </div>
+                                <div>Function&lt;String, Integer&gt; length = </div>
                                 <div className="ml-4">String::length;</div>
-                                <div className="mt-3">Predicate String isEmpty = </div>
+                                <div className="mt-3">Predicate&lt;String&gt; isEmpty = </div>
                                 <div className="ml-4">String::isEmpty;</div>
                             </div>
                         </div>
@@ -613,12 +821,29 @@ const FunctionalPresentation = () => {
                         <div className="bg-orange-50 p-5 rounded-lg">
                             <h4 className="font-bold text-orange-700 mb-3">4. Constructor reference</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
+                                <div className="text-blue-600">{'// Без параметрів - Supplier'}</div>
                                 <div className="text-red-600">{'// Lambda'}</div>
-                                <div>Supplier List listSupplier = </div>
-                                <div className="ml-4">() -&gt; new ArrayList();</div>
-                                <div className="mt-2 text-green-600">{'// Method reference'}</div>
-                                <div>Supplier List listSupplier = </div>
+                                <div>Supplier&lt;List&lt;String&gt;&gt; listSupplier = </div>
+                                <div className="ml-4">() -&gt; new ArrayList&lt;&gt;();</div>
+                                <div className="text-green-600">{'// Constructor reference'}</div>
+                                <div>Supplier&lt;List&lt;String&gt;&gt; listSupplier = </div>
                                 <div className="ml-4">ArrayList::new;</div>
+                                
+                                <div className="mt-3 text-blue-600">{'// 1 параметр - Function'}</div>
+                                <div className="text-red-600">{'// Lambda'}</div>
+                                <div>Function&lt;String, User&gt; userCreator = </div>
+                                <div className="ml-4">name -&gt; new User(name);</div>
+                                <div className="text-green-600">{'// Constructor reference'}</div>
+                                <div>Function&lt;String, User&gt; userCreator = </div>
+                                <div className="ml-4">User::new;</div>
+                                
+                                <div className="mt-3 text-blue-600">{'// 2 параметри - BiFunction'}</div>
+                                <div className="text-red-600">{'// Lambda'}</div>
+                                <div>BiFunction&lt;String, Integer, User&gt; creator = </div>
+                                <div className="ml-4">(name, age) -&gt; new User(name, age);</div>
+                                <div className="text-green-600">{'// Constructor reference'}</div>
+                                <div>BiFunction&lt;String, Integer, User&gt; creator = </div>
+                                <div className="ml-4">User::new;</div>
                             </div>
                         </div>
                     </div>
@@ -643,7 +868,7 @@ const FunctionalPresentation = () => {
                     <div className="bg-green-50 p-5 rounded-lg border-l-4 border-green-500">
                         <h4 className="font-bold text-green-700 mb-3">forEach() - Consumer</h4>
                         <div className="bg-white p-4 rounded font-mono text-sm">
-                            <div>List String list = Arrays.asList("Java", "Python", "C++");</div>
+                            <div>List&lt;String&gt; list = Arrays.asList("Java", "Python", "C++");</div>
                             <div className="mt-2 text-blue-600">{'// З lambda'}</div>
                             <div>list.forEach(item -&gt; System.out.println(item));</div>
                             <div className="mt-2 text-blue-600">{'// З method reference'}</div>
@@ -655,10 +880,10 @@ const FunctionalPresentation = () => {
                         <div className="bg-blue-50 p-5 rounded-lg">
                             <h4 className="font-bold text-blue-700 mb-3">removeIf() - Predicate</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
-                                <div>List Integer numbers = new ArrayList();</div>
+                                <div>List&lt;Integer&gt; numbers = new ArrayList&lt;&gt;();</div>
                                 <div className="mt-2 text-blue-600">{'// Видалити негативні'}</div>
                                 <div>numbers.removeIf(x -&gt; x &lt; 0);</div>
-                                <div className="mt-3">List String names = new ArrayList();</div>
+                                <div className="mt-3">List&lt;String&gt; names = new ArrayList&lt;&gt;();</div>
                                 <div className="mt-2 text-blue-600">{'// Видалити порожні'}</div>
                                 <div>names.removeIf(String::isEmpty);</div>
                             </div>
@@ -667,11 +892,11 @@ const FunctionalPresentation = () => {
                         <div className="bg-purple-50 p-5 rounded-lg">
                             <h4 className="font-bold text-purple-700 mb-3">replaceAll() - UnaryOperator</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
-                                <div>List String words = new ArrayList();</div>
+                                <div>List&lt;String&gt; words = new ArrayList&lt;&gt;();</div>
                                 <div className="mt-2 text-blue-600">{'// Uppercase'}</div>
                                 <div>words.replaceAll(s -&gt; s.toUpperCase());</div>
                                 <div>words.replaceAll(String::toUpperCase);</div>
-                                <div className="mt-3">List Integer nums = new ArrayList();</div>
+                                <div className="mt-3">List&lt;Integer&gt; nums = new ArrayList&lt;&gt;();</div>
                                 <div>nums.replaceAll(x -&gt; x * x);</div>
                             </div>
                         </div>
@@ -679,7 +904,7 @@ const FunctionalPresentation = () => {
                         <div className="bg-orange-50 p-5 rounded-lg">
                             <h4 className="font-bold text-orange-700 mb-3">sort() - Comparator</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
-                                <div>List String names = ...</div>
+                                <div>List&lt;String&gt; names = ...</div>
                                 <div className="mt-2 text-blue-600">{'// Природне сортування'}</div>
                                 <div>names.sort(String::compareTo);</div>
                                 <div>names.sort(Comparator.naturalOrder());</div>
@@ -692,7 +917,7 @@ const FunctionalPresentation = () => {
                         <div className="bg-pink-50 p-5 rounded-lg">
                             <h4 className="font-bold text-pink-700 mb-3">Map operations</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
-                                <div>Map String, Integer map = new HashMap();</div>
+                                <div>Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();</div>
                                 <div className="mt-2 text-blue-600">{'// forEach - BiConsumer'}</div>
                                 <div>map.forEach((k, v) -&gt; </div>
                                 <div className="ml-4">println(k + "=" + v));</div>
@@ -706,14 +931,39 @@ const FunctionalPresentation = () => {
                     <div className="bg-yellow-50 p-5 rounded-lg border border-yellow-400">
                         <h4 className="font-bold text-yellow-700 mb-3">Comparator - потужні можливості</h4>
                         <div className="bg-white p-4 rounded font-mono text-xs">
-                            <div>List User users = getUserList();</div>
-                            <div className="mt-2 text-blue-600">{'// Сортування за віком'}</div>
-                            <div>users.sort(Comparator.comparing(User::getAge));</div>
-                            <div className="mt-2 text-blue-600">{'// Зворотне сортування'}</div>
-                            <div>users.sort(Comparator.comparing(User::getName).reversed());</div>
-                            <div className="mt-2 text-blue-600">{'// Складне: вік, потім ім\'я'}</div>
-                            <div>users.sort(Comparator.comparing(User::getAge)</div>
+                            <div>List&lt;User&gt; users = getUserList();</div>
+                            <div className="mt-2 text-blue-600">{'// Сортування за датою народження'}</div>
+                            <div>users.sort(Comparator.comparing(User::getDateOfBirth));</div>
+                            
+                            <div className="mt-3 text-blue-600">{'// Зворотне сортування (найстарші спочатку)'}</div>
+                            <div>users.sort(Comparator.comparing(</div>
+                            <div className="ml-4">User::getDateOfBirth).reversed());</div>
+                            
+                            <div className="mt-3 text-blue-600">{'// Складне: дата народження, потім ім\'я'}</div>
+                            <div>users.sort(Comparator.comparing(User::getDateOfBirth)</div>
                             <div className="ml-8">.thenComparing(User::getName));</div>
+                            
+                            <div className="mt-3 text-blue-600">{'// Null-safe сортування'}</div>
+                            <div>users.sort(Comparator.comparing(</div>
+                            <div className="ml-4">User::getDateOfBirth, </div>
+                            <div className="ml-4">Comparator.nullsLast(</div>
+                            <div className="ml-8">Comparator.naturalOrder())));</div>
+                            
+                            <div className="mt-3 text-blue-600">{'// За довжиною імені, потім за ім\'ям'}</div>
+                            <div>users.sort(Comparator.comparingInt(</div>
+                            <div className="ml-8">u -&gt; u.getName().length())</div>
+                            <div className="ml-4">.thenComparing(User::getName));</div>
+                        </div>
+                        <div className="mt-3 p-3 bg-blue-50 rounded">
+                            <p className="text-sm text-gray-700 font-semibold mb-2">Корисні методи Comparator:</p>
+                            <div className="text-xs space-y-1 text-gray-700">
+                                <div>• <strong>comparing()</strong> - сортування за полем</div>
+                                <div>• <strong>comparingInt/Long/Double()</strong> - оптимізовані для примітивів</div>
+                                <div>• <strong>reversed()</strong> - зворотний порядок</div>
+                                <div>• <strong>thenComparing()</strong> - додатковий критерій</div>
+                                <div>• <strong>nullsFirst/Last()</strong> - обробка null</div>
+                                <div>• <strong>naturalOrder()</strong> - природний порядок</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -731,12 +981,12 @@ const FunctionalPresentation = () => {
                         <div className="bg-purple-50 p-5 rounded-lg border-l-4 border-purple-500">
                             <h4 className="font-bold text-purple-700 mb-3">Основні FI з java.util.function</h4>
                             <ul className="space-y-2 text-sm text-gray-700">
-                                <li>• <strong>Consumer T</strong> - приймає, не повертає</li>
-                                <li>• <strong>Supplier T</strong> - не приймає, повертає</li>
-                                <li>• <strong>Function T,R</strong> - перетворює T в R</li>
-                                <li>• <strong>Predicate T</strong> - перевіряє умову</li>
-                                <li>• <strong>UnaryOperator T</strong> - T → T</li>
-                                <li>• <strong>BinaryOperator T</strong> - (T,T) → T</li>
+                                <li>• <strong>Consumer&lt;T&gt;</strong> - приймає, не повертає</li>
+                                <li>• <strong>Supplier&lt;T&gt;</strong> - не приймає, повертає</li>
+                                <li>• <strong>Function&lt;T,R&gt;</strong> - перетворює T в R</li>
+                                <li>• <strong>Predicate&lt;T&gt;</strong> - перевіряє умову</li>
+                                <li>• <strong>UnaryOperator&lt;T&gt;</strong> - T → T</li>
+                                <li>• <strong>BinaryOperator&lt;T&gt;</strong> - (T,T) → T</li>
                             </ul>
                         </div>
 
@@ -835,8 +1085,8 @@ const FunctionalPresentation = () => {
                                     key={index}
                                     onClick={() => setCurrentSlide(index)}
                                     className={`h-3 rounded-full transition-all ${index === currentSlide
-                                            ? 'bg-gradient-to-r from-purple-500 to-pink-500 w-8'
-                                            : 'bg-gray-300 hover:bg-gray-400 w-3'
+                                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 w-8'
+                                        : 'bg-gray-300 hover:bg-gray-400 w-3'
                                         }`}
                                     title={`Слайд ${index + 1}`}
                                 />

@@ -210,8 +210,8 @@ const IntegrationPresentation = () => {
               <div className="ml-4">.andThen(printSeparator)</div>
               <div className="ml-4">.andThen(printUpperCase);</div>
               <div className="mt-2">words.forEach(combined);</div>
-              <div className="text-gray-500">{'// Виведе: hello -&gt; HELLO'}</div>
-              <div className="text-gray-500">{'//         world -&gt; WORLD'}</div>
+              <div className="text-gray-500">{'// Виведе: hello -> HELLO'}</div>
+              <div className="text-gray-500">{'//         world -> WORLD'}</div>
             </div>
           </div>
         </div>
@@ -426,36 +426,51 @@ const IntegrationPresentation = () => {
           <div className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white p-4 rounded-lg">
             <h3 className="text-2xl font-bold">Створення власних generic класів</h3>
           </div>
-
+    
           <div className="bg-indigo-50 p-5 rounded-lg border-l-4 border-indigo-500">
             <h4 className="font-bold text-indigo-700 mb-3">Приклад 1: Generic Repository з Functional Interface</h4>
             <div className="bg-white p-4 rounded font-mono text-xs">
               <div>public class Repository&lt;T&gt; &#123;</div>
               <div className="ml-4">private List&lt;T&gt; items = new ArrayList&lt;&gt;();</div>
+              
               <div className="mt-2 ml-4 text-blue-600">{'// Додавання елемента'}</div>
               <div className="ml-4">public void add(T item) &#123;</div>
               <div className="ml-8">items.add(item);</div>
               <div className="ml-4">&#125;</div>
+              
               <div className="mt-2 ml-4 text-blue-600">{'// Фільтрація через Predicate'}</div>
               <div className="ml-4">public List&lt;T&gt; findAll(Predicate&lt;T&gt; condition) &#123;</div>
-              <div className="ml-8">return items.stream()</div>
-              <div className="ml-12">.filter(condition)</div>
-              <div className="ml-12">.toList();</div>
+              <div className="ml-8">List&lt;T&gt; result = new ArrayList&lt;&gt;();</div>
+              <div className="ml-8">for (T item : items) &#123;</div>
+              <div className="ml-12">if (condition.test(item)) &#123;</div>
+              <div className="ml-16">result.add(item);</div>
+              <div className="ml-12">&#125;</div>
+              <div className="ml-8">&#125;</div>
+              <div className="ml-8">return result;</div>
               <div className="ml-4">&#125;</div>
+              
+              <div className="mt-2 ml-4 text-gray-400">{'// Версія з Stream API (вивчимо пізніше):'}</div>
+              <div className="ml-4 text-gray-400">{'// return items.stream().filter(condition).toList();'}</div>
+              
               <div className="mt-2 ml-4 text-blue-600">{'// Обробка кожного через Consumer'}</div>
               <div className="ml-4">public void forEach(Consumer&lt;T&gt; action) &#123;</div>
-              <div className="ml-8">items.forEach(action);</div>
+              <div className="ml-8">for (T item : items) &#123;</div>
+              <div className="ml-12">action.accept(item);</div>
+              <div className="ml-8">&#125;</div>
               <div className="ml-4">&#125;</div>
+              
               <div className="mt-2 ml-4 text-blue-600">{'// Трансформація через Function'}</div>
               <div className="ml-4">public &lt;R&gt; List&lt;R&gt; map(Function&lt;T, R&gt; mapper) &#123;</div>
-              <div className="ml-8">return items.stream()</div>
-              <div className="ml-12">.map(mapper)</div>
-              <div className="ml-12">.toList();</div>
+              <div className="ml-8">List&lt;R&gt; result = new ArrayList&lt;&gt;();</div>
+              <div className="ml-8">for (T item : items) &#123;</div>
+              <div className="ml-12">result.add(mapper.apply(item));</div>
+              <div className="ml-8">&#125;</div>
+              <div className="ml-8">return result;</div>
               <div className="ml-4">&#125;</div>
               <div>&#125;</div>
             </div>
           </div>
-
+    
           <div className="bg-green-50 p-5 rounded-lg">
             <h4 className="font-bold text-green-700 mb-3">Використання Repository</h4>
             <div className="bg-white p-4 rounded font-mono text-xs">
@@ -463,44 +478,94 @@ const IntegrationPresentation = () => {
               <div>userRepo.add(new User("Alice", 25));</div>
               <div>userRepo.add(new User("Bob", 30));</div>
               <div>userRepo.add(new User("Charlie", 20));</div>
+              
               <div className="mt-3 text-blue-600">{'// Знайти користувачів старше 22'}</div>
               <div>List&lt;User&gt; adults = userRepo.findAll(</div>
               <div className="ml-4">u -&gt; u.getAge() &gt; 22</div>
               <div>);</div>
+              
               <div className="mt-3 text-blue-600">{'// Вивести всіх користувачів'}</div>
               <div>userRepo.forEach(</div>
               <div className="ml-4">u -&gt; System.out.println(u.getName())</div>
               <div>);</div>
+              
               <div className="mt-3 text-blue-600">{'// Отримати список імен'}</div>
-              <div>List&lt;String&gt; names = userRepo.map(</div>
-              <div className="ml-4">User::getName</div>
-              <div>);</div>
+              <div>List&lt;String&gt; names = userRepo.map(User::getName);</div>
             </div>
           </div>
-
+    
+          <div className="bg-teal-50 p-5 rounded-lg border-l-4 border-teal-500">
+            <h4 className="font-bold text-teal-700 mb-3">Приклад 2: Спеціалізований UserRepository</h4>
+            <div className="bg-white p-4 rounded font-mono text-xs">
+              <div>public class UserRepository extends Repository&lt;User&gt; &#123;</div>
+              
+              <div className="mt-2 ml-4 text-blue-600">{'// Знайти користувачів старше певного віку'}</div>
+              <div className="ml-4">public List&lt;User&gt; getOlderThan(int age) &#123;</div>
+              <div className="ml-8">return findAll(u -&gt; u.getAge() &gt; age);</div>
+              <div className="ml-4">&#125;</div>
+              
+              <div className="mt-2 ml-4 text-blue-600">{'// Знайти за іменем'}</div>
+              <div className="ml-4">public User findByName(String name) &#123;</div>
+              <div className="ml-8">List&lt;User&gt; found = findAll(</div>
+              <div className="ml-12">u -&gt; u.getName().equals(name)</div>
+              <div className="ml-8">);</div>
+              <div className="ml-8">return found.isEmpty() ? null : found.get(0);</div>
+              <div className="ml-4">&#125;</div>
+              
+              <div className="mt-2 ml-4 text-blue-600">{'// Отримати всіх дорослих (18+)'}</div>
+              <div className="ml-4">public List&lt;User&gt; getAdults() &#123;</div>
+              <div className="ml-8">return findAll(u -&gt; u.getAge() &gt;= 18);</div>
+              <div className="ml-4">&#125;</div>
+              
+              <div className="mt-2 ml-4 text-blue-600">{'// Підрахувати користувачів за умовою'}</div>
+              <div className="ml-4">public int countWhere(Predicate&lt;User&gt; condition) &#123;</div>
+              <div className="ml-8">return findAll(condition).size();</div>
+              <div className="ml-4">&#125;</div>
+              <div>&#125;</div>
+              
+              <div className="mt-4 text-blue-600">{'// Використання:'}</div>
+              <div>UserRepository userRepo = new UserRepository();</div>
+              <div>userRepo.add(new User("Alice", 25));</div>
+              <div>userRepo.add(new User("Bob", 17));</div>
+              <div>userRepo.add(new User("Charlie", 30));</div>
+              <div className="mt-2">List&lt;User&gt; adults = userRepo.getAdults();</div>
+              <div>User alice = userRepo.findByName("Alice");</div>
+              <div>int count = userRepo.countWhere(u -&gt; u.getAge() &gt; 20);</div>
+            </div>
+          </div>
+    
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-blue-50 p-5 rounded-lg">
-              <h4 className="font-bold text-blue-700 mb-3">Приклад 2: Validator</h4>
+              <h4 className="font-bold text-blue-700 mb-3">Приклад 3: Validator</h4>
               <div className="bg-white p-3 rounded font-mono text-xs">
                 <div>public class Validator&lt;T&gt; &#123;</div>
                 <div className="ml-4">private List&lt;Predicate&lt;T&gt;&gt; rules = </div>
                 <div className="ml-8">new ArrayList&lt;&gt;();</div>
+                
                 <div className="mt-2 ml-4 text-blue-600">{'// Додати правило'}</div>
                 <div className="ml-4">public Validator&lt;T&gt; addRule(</div>
                 <div className="ml-8">Predicate&lt;T&gt; rule) &#123;</div>
                 <div className="ml-12">rules.add(rule);</div>
                 <div className="ml-12">return this;</div>
                 <div className="ml-4">&#125;</div>
+                
                 <div className="mt-2 ml-4 text-blue-600">{'// Валідація'}</div>
                 <div className="ml-4">public boolean validate(T item) &#123;</div>
-                <div className="ml-8">return rules.stream()</div>
-                <div className="ml-12">.allMatch(rule -&gt; </div>
-                <div className="ml-16">rule.test(item));</div>
+                <div className="ml-8">for (Predicate&lt;T&gt; rule : rules) &#123;</div>
+                <div className="ml-12">if (!rule.test(item)) &#123;</div>
+                <div className="ml-16">return false;</div>
+                <div className="ml-12">&#125;</div>
+                <div className="ml-8">&#125;</div>
+                <div className="ml-8">return true;</div>
                 <div className="ml-4">&#125;</div>
+                
+                <div className="mt-2 ml-4 text-gray-400">{'// Версія з Stream API:'}</div>
+                <div className="ml-4 text-gray-400">{'// return rules.stream()'}</div>
+                <div className="ml-4 text-gray-400">{'//.allMatch(rule -> rule.test(item));'}</div>
                 <div>&#125;</div>
               </div>
             </div>
-
+    
             <div className="bg-purple-50 p-5 rounded-lg">
               <h4 className="font-bold text-purple-700 mb-3">Використання Validator</h4>
               <div className="bg-white p-3 rounded font-mono text-xs">
@@ -510,26 +575,36 @@ const IntegrationPresentation = () => {
                 <div className="ml-8">.addRule(u -&gt; u.getEmail() != null)</div>
                 <div className="ml-8">.addRule(u -&gt; </div>
                 <div className="ml-12">u.getName().length() &gt; 2);</div>
+                
                 <div className="mt-3">User user = new User("Alice", 25, </div>
                 <div className="ml-4">"alice@example.com");</div>
+                
                 <div className="mt-2">boolean isValid = </div>
                 <div className="ml-4">userValidator.validate(user);</div>
                 <div>System.out.println(isValid);</div>
                 <div className="text-gray-500">{'// true'}</div>
+                
+                <div className="mt-3">User youngUser = </div>
+                <div className="ml-4">new User("Bob", 16, "bob@test.com");</div>
+                <div>System.out.println(</div>
+                <div className="ml-4">userValidator.validate(youngUser));</div>
+                <div className="text-gray-500">{'// false - вік < 18'}</div>
               </div>
             </div>
           </div>
-
+    
           <div className="bg-orange-50 p-5 rounded-lg">
-            <h4 className="font-bold text-orange-700 mb-3">Приклад 3: Generic Pipeline</h4>
+            <h4 className="font-bold text-orange-700 mb-3">Приклад 4: Generic Pipeline</h4>
             <div className="bg-white p-4 rounded font-mono text-xs">
               <div>public class Pipeline&lt;T&gt; &#123;</div>
               <div className="ml-4">private List&lt;Function&lt;T, T&gt;&gt; operations = </div>
               <div className="ml-8">new ArrayList&lt;&gt;();</div>
+              
               <div className="mt-2 ml-4">public Pipeline&lt;T&gt; add(Function&lt;T, T&gt; operation) &#123;</div>
               <div className="ml-8">operations.add(operation);</div>
               <div className="ml-8">return this;</div>
               <div className="ml-4">&#125;</div>
+              
               <div className="mt-2 ml-4">public T execute(T input) &#123;</div>
               <div className="ml-8">T result = input;</div>
               <div className="ml-8">for (Function&lt;T, T&gt; op : operations) &#123;</div>
@@ -538,12 +613,17 @@ const IntegrationPresentation = () => {
               <div className="ml-8">return result;</div>
               <div className="ml-4">&#125;</div>
               <div>&#125;</div>
+              
               <div className="mt-3 text-blue-600">{'// Використання'}</div>
               <div>Pipeline&lt;String&gt; textPipeline = new Pipeline&lt;&gt;()</div>
               <div className="ml-4">.add(String::trim)</div>
               <div className="ml-4">.add(String::toLowerCase)</div>
-              <div className="ml-4">.add(s -&gt; s.replaceAll("\\s+", " "));</div>
-              <div className="mt-2">String result = textPipeline.execute("  Hello   World  ");</div>
+              <div className="ml-4">.add(s -&gt; s.replaceAll("\\\\s+", " "));</div>
+              
+              <div className="mt-2">String result = </div>
+              <div className="ml-4">textPipeline.execute("  Hello   World  ");</div>
+              <div>System.out.println(result);</div>
+              <div className="text-gray-500">{'// "hello world"'}</div>
             </div>
           </div>
         </div>

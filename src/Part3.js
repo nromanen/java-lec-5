@@ -53,35 +53,35 @@ const CollectionsPresentation = () => {
 
           <div className="bg-gray-50 p-6 rounded-lg">
             <div className="font-mono text-sm space-y-1">
-              <div className="font-bold text-blue-600">Iterable E</div>
+              <div className="font-bold text-blue-600">{"Iterable<E>"}</div>
               <div className="ml-4">↓</div>
-              <div className="ml-4 font-bold text-green-600">Collection E</div>
-              <div className="ml-8">├── <span className="font-bold text-purple-600">List E</span> <span className="text-gray-500">(упорядкована колекція, дозволяє дублікати)</span></div>
-              <div className="ml-12">│   ├── ArrayList</div>
-              <div className="ml-12">│   ├── LinkedList</div>
-              <div className="ml-12">│   └── Vector (застарілий)</div>
-              <div className="ml-8">├── <span className="font-bold text-orange-600">Set E</span> <span className="text-gray-500">(унікальні елементи)</span></div>
-              <div className="ml-12">│   ├── HashSet</div>
-              <div className="ml-12">│   ├── LinkedHashSet</div>
-              <div className="ml-12">│   └── <span className="font-bold text-red-600">SortedSet E</span></div>
-              <div className="ml-16">│       └── TreeSet</div>
-              <div className="ml-8">└── <span className="font-bold text-yellow-600">Queue E</span> <span className="text-gray-500">(FIFO, обробка елементів)</span></div>
-              <div className="ml-12">    ├── PriorityQueue</div>
-              <div className="ml-12">    └── <span className="font-bold text-pink-600">Deque E</span></div>
-              <div className="ml-16">        ├── ArrayDeque</div>
-              <div className="ml-16">        └── LinkedList</div>
+              <div className="ml-4 font-bold text-green-600">{"Collection<E>"}</div>
+              <div className="ml-8">├── <span className="font-bold text-purple-600">{"List<E>"}</span> <span className="text-gray-500">(упорядкована колекція, дозволяє дублікати)</span></div>
+              <div className="ml-12">│   ├── {"ArrayList<E>"}</div>
+              <div className="ml-12">│   ├── {"LinkedList<E>"}</div>
+              <div className="ml-12">│   └── {"Vector<E>"} (застарілий)</div>
+              <div className="ml-8">├── <span className="font-bold text-orange-600">{"Set<E>"}</span> <span className="text-gray-500">(унікальні елементи)</span></div>
+              <div className="ml-12">│   ├── {"HashSet<E>"}</div>
+              <div className="ml-12">│   ├── {"LinkedHashSet<E>"}</div>
+              <div className="ml-12">│   └── <span className="font-bold text-red-600">{"SortedSet<E>"}</span></div>
+              <div className="ml-16">│       └── {"TreeSet<E>"}</div>
+              <div className="ml-8">└── <span className="font-bold text-yellow-600">{"Queue<E>"}</span> <span className="text-gray-500">(FIFO, обробка елементів)</span></div>
+              <div className="ml-12">    ├── {"PriorityQueue<E>"}</div>
+              <div className="ml-12">    └── <span className="font-bold text-pink-600">{"Deque<E>"}</span></div>
+              <div className="ml-16">        ├── {"ArrayDeque<E>"}</div>
+              <div className="ml-16">        └── {"LinkedList<E>"}</div>
             </div>
           </div>
 
           <div className="bg-blue-50 p-6 rounded-lg">
             <div className="font-mono text-sm space-y-1">
-              <div className="font-bold text-blue-600">Map K,V</div>
+              <div className="font-bold text-blue-600">{"Map<K,V>"}</div>
               <div className="ml-4 text-gray-500">(окрема ієрархія, не extends Collection)</div>
-              <div className="ml-4">├── HashMap</div>
-              <div className="ml-4">├── LinkedHashMap</div>
-              <div className="ml-4">├── Hashtable (застарілий)</div>
-              <div className="ml-4">└── <span className="font-bold text-red-600">SortedMap K,V</span></div>
-              <div className="ml-8">    └── TreeMap</div>
+              <div className="ml-4">├── {"HashMap<K,V>"}</div>
+              <div className="ml-4">├── {"LinkedHashMap<K,V>"}</div>
+              <div className="ml-4">├── {"Hashtable<K,V>"} (застарілий)</div>
+              <div className="ml-4">└── <span className="font-bold text-red-600">{"SortedMap<K,V>"}</span></div>
+              <div className="ml-8">    └── {"TreeMap<K,V>"}</div>
             </div>
           </div>
         </div>
@@ -92,7 +92,7 @@ const CollectionsPresentation = () => {
       content: (
         <div className="space-y-5">
           <div className="bg-blue-50 p-5 rounded-lg border-l-4 border-blue-500">
-            <h4 className="font-bold text-blue-700 mb-3">Collection E</h4>
+            <h4 className="font-bold text-blue-700 mb-3">{"Collection<E>"}</h4>
             <p className="text-gray-700 mb-3">Кореневий інтерфейс для всіх колекцій (крім Map)</p>
             <div className="bg-white p-3 rounded font-mono text-sm">
               <code className="text-gray-800">
@@ -101,14 +101,14 @@ const CollectionsPresentation = () => {
                 <div>boolean contains(Object o);</div>
                 <div>int size();</div>
                 <div>void clear();</div>
-                <div>Iterator E iterator();</div>
+                <div>{"Iterator<E> iterator();"}</div>
               </code>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
-              <h4 className="font-bold text-purple-700 mb-2">List E</h4>
+              <h4 className="font-bold text-purple-700 mb-2">{"List<E>"}</h4>
               <p className="text-sm text-gray-700 mb-2">Впорядкована колекція з доступом за індексом</p>
               <div className="bg-white p-2 rounded font-mono text-xs">
                 <code>
@@ -121,7 +121,7 @@ const CollectionsPresentation = () => {
             </div>
 
             <div className="bg-orange-50 p-4 rounded-lg border-l-4 border-orange-500">
-              <h4 className="font-bold text-orange-700 mb-2">Set E</h4>
+              <h4 className="font-bold text-orange-700 mb-2">{"Set<E>"}</h4>
               <p className="text-sm text-gray-700 mb-2">Колекція унікальних елементів</p>
               <div className="bg-white p-2 rounded font-mono text-xs">
                 <code>
@@ -133,7 +133,7 @@ const CollectionsPresentation = () => {
             </div>
 
             <div className="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
-              <h4 className="font-bold text-green-700 mb-2">Queue E</h4>
+              <h4 className="font-bold text-green-700 mb-2">{"Queue<E>"}</h4>
               <p className="text-sm text-gray-700 mb-2">Черга для обробки елементів</p>
               <div className="bg-white p-2 rounded font-mono text-xs">
                 <code>
@@ -145,15 +145,15 @@ const CollectionsPresentation = () => {
             </div>
 
             <div className="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
-              <h4 className="font-bold text-red-700 mb-2">Map K,V</h4>
+              <h4 className="font-bold text-red-700 mb-2">{"Map<K,V>"}</h4>
               <p className="text-sm text-gray-700 mb-2">Пари ключ-значення</p>
               <div className="bg-white p-2 rounded font-mono text-xs">
                 <code>
                   <div>V put(K key, V value);</div>
                   <div>V get(Object key);</div>
                   <div>V remove(Object key);</div>
-                  <div>Set K keySet();</div>
-                  <div>Collection V values();</div>
+                  <div>{"Set<K> keySet();"}</div>
+                  <div>{"Collection<V> values();"}</div>
                 </code>
               </div>
             </div>
@@ -194,7 +194,7 @@ const CollectionsPresentation = () => {
               </div>
 
               <div className="bg-white p-3 rounded mt-3 font-mono text-xs">
-                <div>List String list = new ArrayList();</div>
+                <div>{"List<String> list = new ArrayList<>();"}</div>
                 <div>list.add("Java");</div>
                 <div>String s = list.get(0);</div>
                 <div>list.add(0, "Hi");</div>
@@ -228,7 +228,7 @@ const CollectionsPresentation = () => {
               </div>
 
               <div className="bg-white p-3 rounded mt-3 font-mono text-xs">
-                <div>LinkedList String list = new LinkedList();</div>
+                <div>{"LinkedList<String> list = new LinkedList<>();"}</div>
                 <div>list.addFirst("Hi");</div>
                 <div>String s = list.get(100);</div>
                 <div>list.removeFirst();</div>
@@ -239,7 +239,7 @@ const CollectionsPresentation = () => {
           <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-400">
             <p className="font-semibold text-gray-800">💡 Коли що використовувати:</p>
             <div className="grid grid-cols-2 gap-3 mt-2 text-sm">
-              <div><strong>ArrayList:</strong> багато читань, рідкісні модифікації</div>
+              <div><strong>ArrayList:</strong> багато читань, нечасті модифікації</div>
               <div><strong>LinkedList:</strong> часті вставки/видалення на початку/кінці</div>
             </div>
           </div>
@@ -270,7 +270,7 @@ const CollectionsPresentation = () => {
                   </div>
                 </div>
                 <div className="bg-white p-3 rounded font-mono text-xs">
-                  <div>Set String set = new HashSet();</div>
+                  <div>{"Set<String> set = new HashSet<>();"}</div>
                   <div>set.add("Java");</div>
                   <div>set.add("Python");</div>
                   <div>set.add("Java");</div>
@@ -294,7 +294,7 @@ const CollectionsPresentation = () => {
                   </div>
                 </div>
                 <div className="bg-white p-3 rounded font-mono text-xs">
-                  <div>Set Integer set = new TreeSet();</div>
+                  <div>{"Set<Integer> set = new TreeSet<>();"}</div>
                   <div>set.add(5);</div>
                   <div>set.add(1);</div>
                   <div>set.add(3);</div>
@@ -318,7 +318,7 @@ const CollectionsPresentation = () => {
                   </div>
                 </div>
                 <div className="bg-white p-3 rounded font-mono text-xs">
-                  <div>Set String set = new LinkedHashSet();</div>
+                  <div>{"Set<String> set = new LinkedHashSet<>();"}</div>
                   <div>set.add("Java");</div>
                   <div>set.add("Python");</div>
                   <div>set.add("C++");</div>
@@ -363,7 +363,7 @@ const CollectionsPresentation = () => {
                   </div>
                 </div>
                 <div className="bg-white p-3 rounded font-mono text-xs">
-                  <div>Map String, Integer map = new HashMap();</div>
+                  <div>{"Map<String, Integer> map = new HashMap<>();"}</div>
                   <div>map.put("Java", 1995);</div>
                   <div>map.put("Python", 1991);</div>
                   <div className="mt-2">Integer year = map.get("Java");</div>
@@ -387,7 +387,7 @@ const CollectionsPresentation = () => {
                   </div>
                 </div>
                 <div className="bg-white p-3 rounded font-mono text-xs">
-                  <div>Map Integer, String map = new TreeMap();</div>
+                  <div>{"Map<Integer, String> map = new TreeMap<>();"}</div>
                   <div>map.put(3, "Three");</div>
                   <div>map.put(1, "One");</div>
                   <div>map.put(2, "Two");</div>
@@ -407,11 +407,11 @@ const CollectionsPresentation = () => {
                     <div><strong>Особливості:</strong></div>
                     <div>• Зберігає порядок вставки</div>
                     <div>• Або порядок доступу</div>
-                    <div>• Ідеально для LRU кешу</div>
+                    <div>• Ідеально для LRU (Least Frequently Used) кешу</div>
                   </div>
                 </div>
                 <div className="bg-white p-3 rounded font-mono text-xs">
-                  <div>Map String, Integer map = new LinkedHashMap();</div>
+                  <div>{"Map<String, Integer> map = new LinkedHashMap<>();"}</div>
                   <div>map.put("First", 1);</div>
                   <div>map.put("Second", 2);</div>
                   <div>map.put("Third", 3);</div>
@@ -441,7 +441,7 @@ const CollectionsPresentation = () => {
           </div>
 
           <div className="bg-yellow-50 p-5 rounded-lg border-l-4 border-yellow-500">
-            <h4 className="font-bold text-yellow-700 mb-3">Queue E - Інтерфейс черги</h4>
+            <h4 className="font-bold text-yellow-700 mb-3">{"Queue<E> - Інтерфейс черги"}</h4>
             <p className="text-gray-700 mb-3">FIFO (First In First Out) - перший прийшов, перший вийшов</p>
             <div className="bg-white p-4 rounded text-sm">
               <div className="grid grid-cols-2 gap-4">
@@ -466,7 +466,7 @@ const CollectionsPresentation = () => {
               <h4 className="font-bold text-orange-700 mb-3">PriorityQueue</h4>
               <p className="text-gray-700 mb-3">Черга з пріоритетами. Елементи сортуються.</p>
               <div className="bg-white p-3 rounded font-mono text-xs">
-                <div>Queue Integer pq = new PriorityQueue();</div>
+                <div>{"Queue<Integer> pq = new PriorityQueue<>();"}</div>
                 <div>pq.offer(5);</div>
                 <div>pq.offer(1);</div>
                 <div>pq.offer(3);</div>
@@ -484,7 +484,7 @@ const CollectionsPresentation = () => {
               <h4 className="font-bold text-blue-700 mb-3">ArrayDeque</h4>
               <p className="text-gray-700 mb-3">Двостороння черга. Швидша за Stack і LinkedList.</p>
               <div className="bg-white p-3 rounded font-mono text-xs">
-                <div>Deque String deque = new ArrayDeque();</div>
+                <div>{"Deque<String> deque = new ArrayDeque<>();"}</div>
                 <div className="mt-2 text-gray-500">{'// Як черга (FIFO):'}</div>
                 <div>deque.offerLast("A");</div>
                 <div>deque.pollFirst();</div>
@@ -506,7 +506,7 @@ const CollectionsPresentation = () => {
       content: (
         <div className="space-y-6">
           <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white p-4 rounded-lg">
-            <h3 className="text-2xl font-bold">Big O - складність операцій</h3>
+            <h3 className="text-2xl font-bold">Big O - складність операцій (швидкодія)</h3>
           </div>
 
           <div className="bg-blue-50 p-5 rounded-lg">
@@ -640,7 +640,7 @@ const CollectionsPresentation = () => {
           <div className="bg-indigo-50 p-5 rounded-lg border-l-4 border-indigo-500">
             <h4 className="font-bold text-indigo-700 mb-3">Сортування</h4>
             <div className="bg-white p-4 rounded font-mono text-sm">
-              <div>List Integer numbers = Arrays.asList(5, 2, 8, 1, 9);</div>
+              <div>{"List<Integer> numbers = Arrays.asList(5, 2, 8, 1, 9);"}</div>
               <div className="mt-2">Collections.sort(numbers);</div>
               <div className="text-gray-500 text-xs">{'// [1, 2, 5, 8, 9]'}</div>
               <div className="mt-2">Collections.sort(numbers, Collections.reverseOrder());</div>
@@ -673,7 +673,7 @@ const CollectionsPresentation = () => {
             <div className="bg-purple-50 p-5 rounded-lg border-l-4 border-purple-500">
               <h4 className="font-bold text-purple-700 mb-3">Незмінні колекції</h4>
               <div className="bg-white p-3 rounded font-mono text-xs">
-                <div>List String immutable = Collections.unmodifiableList(list);</div>
+                <div>{"List<String> immutable = Collections.unmodifiableList(list);"}</div>
                 <div className="mt-2 text-red-600 text-xs">{'// Спроба змінити викине Exception'}</div>
               </div>
             </div>
@@ -681,8 +681,8 @@ const CollectionsPresentation = () => {
             <div className="bg-orange-50 p-5 rounded-lg border-l-4 border-orange-500">
               <h4 className="font-bold text-orange-700 mb-3">Синхронізовані</h4>
               <div className="bg-white p-3 rounded font-mono text-xs">
-                <div>List String syncList = Collections.synchronizedList(new ArrayList());</div>
-                <div className="mt-2">Set Integer syncSet = Collections.synchronizedSet(new HashSet());</div>
+                <div>{"List<String> syncList = Collections.synchronizedList(new ArrayList<>());"}</div>
+                <div className="mt-2">{"Set<Integer> syncSet = Collections.synchronizedSet(new HashSet<>());"}</div>
               </div>
             </div>
           </div>
@@ -690,10 +690,145 @@ const CollectionsPresentation = () => {
           <div className="bg-pink-50 p-5 rounded-lg">
             <h4 className="font-bold text-pink-700 mb-3">Порожні та одноелементні колекції</h4>
             <div className="bg-white p-4 rounded font-mono text-sm">
-              <div>List String empty = Collections.emptyList();</div>
-              <div>Set Integer emptySet = Collections.emptySet();</div>
-              <div className="mt-2">List String single = Collections.singletonList("One");</div>
-              <div>Set Integer singleSet = Collections.singleton(42);</div>
+              <div>{"List<String> empty = Collections.emptyList();"}</div>
+              <div>{"Set<Integer> emptySet = Collections.emptySet();"}</div>
+              <div className="mt-2">{"List<String> single = Collections.singletonList(\"One\");"}</div>
+              <div>{"Set<Integer> singleSet = Collections.singleton(42);"}</div>
+            </div>
+          </div>
+        </div>
+      )
+    },
+    {
+      title: "Immutable Collections (Java 9+)",
+      content: (
+        <div className="space-y-6">
+          <div className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white p-4 rounded-lg">
+            <h3 className="text-2xl font-bold">Незмінні колекції</h3>
+          </div>
+
+          <div className="bg-blue-50 p-5 rounded-lg border-l-4 border-blue-500">
+            <h4 className="font-bold text-blue-700 mb-3">Створення immutable колекцій</h4>
+            <div className="bg-white p-4 rounded font-mono text-sm space-y-2">
+              <div className="font-bold text-gray-700">List:</div>
+              <div>{"List<String> list = List.of(\"Java\", \"Python\", \"C++\");"}</div>
+              
+              <div className="font-bold text-gray-700 mt-3">Set:</div>
+              <div>{"Set<Integer> set = Set.of(1, 2, 3, 4, 5);"}</div>
+              
+              <div className="font-bold text-gray-700 mt-3">Map:</div>
+              <div>{"Map<String, Integer> map = Map.of("}</div>
+              <div className="ml-4">    "Java", 1995,</div>
+              <div className="ml-4">    "Python", 1991</div>
+              <div>{");"}</div>
+              
+              <div className="font-bold text-gray-700 mt-3">Для великих Map ({">"} 10 елементів):</div>
+              <div>{"Map<String, Integer> bigMap = Map.ofEntries("}</div>
+              <div className="ml-4">    {'Map.entry("Key1", 1),'}</div>
+              <div className="ml-4">    {'Map.entry("Key2", 2)'}</div>
+              <div>{");"}</div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-green-50 p-5 rounded-lg border-l-4 border-green-500">
+              <h4 className="font-bold text-green-700 mb-3">✓ Переваги Immutable</h4>
+              <ul className="space-y-2 text-sm text-gray-700">
+                <li>• <strong>Потокобезпечні</strong> - можна використовувати в багатопотоковості</li>
+                <li>• <strong>Оптимізовані</strong> - займають менше пам'яті</li>
+                <li>• <strong>Справжня незмінність</strong> - гарантовано не зміняться</li>
+                <li>• <strong>Швидкі</strong> - оптимізовані для читання</li>
+                <li>• <strong>Безпечні</strong> - можна передавати без копіювання</li>
+              </ul>
+            </div>
+
+            <div className="bg-red-50 p-5 rounded-lg border-l-4 border-red-500">
+              <h4 className="font-bold text-red-700 mb-3">✗ Обмеження</h4>
+              <ul className="space-y-2 text-sm text-gray-700">
+                <li>• <strong>Не дозволяють null</strong> - викине NullPointerException</li>
+                <li>• <strong>Не можна модифікувати</strong> - add/remove/clear викинуть UnsupportedOperationException</li>
+                <li>• <strong>Тільки Java 9+</strong></li>
+                <li>• <strong>Для Map.of()</strong> максимум 10 пар ключ-значення</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="bg-yellow-50 p-5 rounded-lg border-l-4 border-yellow-500">
+            <h4 className="font-bold text-yellow-700 mb-3">⚠️ Immutable vs Unmodifiable</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-white p-4 rounded">
+                <p className="font-semibold text-gray-800 mb-2">Unmodifiable (старий спосіб)</p>
+                <div className="font-mono text-xs mb-2">
+                  <div>{"List<String> original = new ArrayList<>();"}</div>
+                  <div>original.add("Java");</div>
+                  <div>{"List<String> unmod ="}</div>
+                  <div>{"  Collections.unmodifiableList(original);"}</div>
+                  <div className="text-red-600 mt-2">original.add("Python");</div>
+                  <div className="text-red-600">{'// unmod теж змінився! ❌'}</div>
+                </div>
+                <p className="text-xs text-gray-600">Це лише обгортка, оригінал можна змінити</p>
+              </div>
+
+              <div className="bg-white p-4 rounded">
+                <p className="font-semibold text-gray-800 mb-2">Immutable (Java 9+)</p>
+                <div className="font-mono text-xs mb-2">
+                  <div>{"List<String> immutable ="}</div>
+                  <div>{'  List.of("Java", "Python");'}</div>
+                  <div className="text-green-600 mt-2">{'// Справжня незмінність ✓'}</div>
+                  <div className="text-green-600">{'// Немає оригіналу'}</div>
+                  <div className="text-green-600">{'// Ніхто не може змінити'}</div>
+                </div>
+                <p className="text-xs text-gray-600">Справжня незмінна колекція</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-purple-50 p-5 rounded-lg">
+            <h4 className="font-bold text-purple-700 mb-3">Копіювання в immutable</h4>
+            <div className="bg-white p-4 rounded font-mono text-sm">
+              <div>{"List<String> mutable = new ArrayList<>();"}</div>
+              <div>mutable.add("Java");</div>
+              <div>mutable.add("Python");</div>
+              <div className="mt-2 text-gray-500">{'// Створити immutable копію:'}</div>
+              <div>{"List<String> immutable = List.copyOf(mutable);"}</div>
+              <div className="mt-2 text-gray-500">{'// Тепер mutable можна змінювати, але immutable залишиться незмінним'}</div>
+            </div>
+          </div>
+
+          <div className="bg-gray-50 p-5 rounded-lg border-l-4 border-gray-500">
+            <h4 className="font-bold text-gray-700 mb-3">🔧 Внутрішня імплементація</h4>
+            <div className="space-y-3 text-sm">
+              <div className="bg-white p-3 rounded">
+                <p className="font-semibold text-blue-700 mb-1">List.of() →</p>
+                <p className="text-gray-700 font-mono text-xs">ImmutableCollections.List0/List1/List2/ListN</p>
+                <p className="text-gray-600 text-xs mt-1">Маленькі списки (0-2): окремі класи. Більші: ListN з масивом Object[]</p>
+              </div>
+              
+              <div className="bg-white p-3 rounded">
+                <p className="font-semibold text-orange-700 mb-1">Set.of() →</p>
+                <p className="text-gray-700 font-mono text-xs">ImmutableCollections.Set0/Set1/Set2/SetN</p>
+                <p className="text-gray-600 text-xs mt-1">SetN використовує хеш-таблицю для швидкого пошуку O(1)</p>
+              </div>
+              
+              <div className="bg-white p-3 rounded">
+                <p className="font-semibold text-purple-700 mb-1">Map.of() / Map.ofEntries() →</p>
+                <p className="text-gray-700 font-mono text-xs">ImmutableCollections.Map0/Map1/.../MapN</p>
+                <p className="text-gray-600 text-xs mt-1">Зберігає у плоскому масиві: [key1, val1, key2, val2, ...]</p>
+              </div>
+              
+              <div className="bg-blue-50 p-2 rounded mt-2">
+                <p className="text-xs text-gray-700"><strong>Оптимізація:</strong> Окремі класи для 0-2 елементів = мінімальне використання пам'яті</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-indigo-50 p-4 rounded-lg">
+            <p className="font-semibold text-indigo-800 mb-2">💡 Коли використовувати:</p>
+            <div className="text-sm text-gray-700 space-y-1">
+              <div>• Константи та конфігурації</div>
+              <div>• Повернення колекцій з методів (запобігає зміні)</div>
+              <div>• Багатопотокові застосунки</div>
+              <div>• Ключі в Map (гарантує стабільність)</div>
             </div>
           </div>
         </div>
@@ -747,7 +882,7 @@ const CollectionsPresentation = () => {
               <div>🔸 Потрібні пари ключ-значення? → <strong>Map</strong></div>
               <div>🔸 Потрібна черга? → <strong>Queue/Deque</strong></div>
               <div>🔸 Потрібне сортування? → <strong>TreeSet/TreeMap</strong></div>
-              <div>🔸 Найшвидша швидкодія? → <strong>ArrayList/HashSet/HashMap</strong></div>
+              <div>🔸 Найкраща швидкодія? → <strong>ArrayList/HashSet/HashMap</strong></div>
             </div>
           </div>
 
