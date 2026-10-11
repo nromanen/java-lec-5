@@ -317,7 +317,7 @@ const GenericsPresentation = () => {
       <div className="bg-yellow-50 p-5 rounded-lg border-l-4 border-yellow-500">
         <h4 className="font-bold text-yellow-700 mb-3">Wildcards - що це?</h4>
         <p className="text-gray-700">
-          Wildcards (<code>?</code>) використовуються коли ми не знаємо або не важливо, який саме тип буде використаний
+          Wildcards (<code>?</code>) використовуються, коли ми не знаємо або нам не важливо, який саме тип буде використаний
         </p>
       </div>
 
@@ -325,14 +325,14 @@ const GenericsPresentation = () => {
         <h4 className="font-bold text-blue-700 mb-3">Unbounded Wildcard: &lt;?&gt;</h4>
         <div className="bg-white p-4 rounded font-mono text-sm">
           <code className="text-gray-800">
-            <div className="text-blue-600">{'// Приймає List будь-якого типу'}</div>
+            <div className="text-blue-600">{'// Accepts a List of any type'}</div>
             <div>public static void printList(List&lt;?&gt; list) {'{'}</div>
             <div className="ml-4">for (Object item : list) {'{'}</div>
             <div className="ml-8">System.out.println(item);</div>
             <div className="ml-4">{'}'}</div>
             <div>{'}'}</div>
             <div className="mt-3"></div>
-            <div className="text-blue-600">{'// Можна передати будь-який List'}</div>
+            <div className="text-blue-600">{'// Any List can be passed'}</div>
             <div>List&lt;String&gt; strings = Arrays.asList("a", "b");</div>
             <div>List&lt;Integer&gt; numbers = Arrays.asList(1, 2, 3);</div>
             <div>printList(strings); <span className="text-green-600">{'// OK'}</span></div>
@@ -343,15 +343,18 @@ const GenericsPresentation = () => {
 
       <div className="bg-red-50 p-5 rounded-lg">
         <h4 className="font-bold text-red-700 mb-3">Обмеження з &lt;?&gt;</h4>
-        
+
         <div className="mb-4">
-          <p className="font-semibold text-red-800 mb-2">1. Неможливість додавати елементи (крім null)</p>
+          <p className="font-semibold text-red-800 mb-2">1. Не можна передати значення типу T (крім null)</p>
+          <p className="text-gray-700 mb-2">
+            Стосується будь-якого generic-типу, а не лише колекцій: <code>add(E)</code> у List, <code>accept(T)</code> у Consumer, <code>set(T)</code> у власному Box&lt;T&gt;
+          </p>
           <div className="bg-white p-4 rounded font-mono text-sm">
             <code className="text-gray-800">
-              <div>public static void addToList(List&lt;?&gt; list) {'{'}</div>
-              <div className="ml-4">list.add("Hello"); <span className="text-red-600">{'// ❌ Помилка!'}</span></div>
-              <div className="ml-4">list.add(123); <span className="text-red-600">{'// ❌ Помилка!'}</span></div>
-              <div className="ml-4">list.add(null); <span className="text-green-600">{'// ✅ Тільки null'}</span></div>
+              <div>public static void process(List&lt;?&gt; list, Consumer&lt;?&gt; consumer) {'{'}</div>
+              <div className="ml-4">list.add("Hello"); <span className="text-red-600">{'// ❌ compile error'}</span></div>
+              <div className="ml-4">consumer.accept(123); <span className="text-red-600">{'// ❌ same restriction'}</span></div>
+              <div className="ml-4">list.add(null); <span className="text-green-600">{'// ✅ only null'}</span></div>
               <div>{'}'}</div>
             </code>
           </div>
@@ -361,32 +364,34 @@ const GenericsPresentation = () => {
           <p className="font-semibold text-red-800 mb-2">2. Читання тільки як Object</p>
           <div className="bg-white p-4 rounded font-mono text-sm">
             <code className="text-gray-800">
-              <div>List&lt;?&gt; list = new ArrayList&lt;String&gt;();</div>
+              <div>List&lt;?&gt; list = List.of("a", "b");</div>
               <div>Object item = list.get(0); <span className="text-green-600">{'// ✅ OK'}</span></div>
-              <div>String str = list.get(0); <span className="text-red-600">{'// ❌ Помилка!'}</span></div>
+              <div>String str = list.get(0); <span className="text-red-600">{'// ❌ compile error'}</span></div>
             </code>
           </div>
         </div>
 
         <div className="mb-4">
-          <p className="font-semibold text-red-800 mb-2">3. Неможливість створити екземпляр</p>
+          <p className="font-semibold text-red-800 mb-2">3. Не можна створити екземпляр з &lt;?&gt;</p>
           <div className="bg-white p-4 rounded font-mono text-sm">
             <code className="text-gray-800">
-              <div>List&lt;?&gt; list = new ArrayList&lt;?&gt;(); <span className="text-red-600">{'// ❌'}</span></div>
-              <div>List&lt;?&gt; list = new ArrayList&lt;&gt;(); <span className="text-red-600">{'// ❌'}</span></div>
+              <div>List&lt;?&gt; a = new ArrayList&lt;?&gt;(); <span className="text-red-600">{'// ❌ compile error'}</span></div>
+              <div>List&lt;?&gt; b = new ArrayList&lt;&gt;(); <span className="text-green-600">{'// ✅ infers ArrayList<Object>'}</span></div>
             </code>
           </div>
         </div>
 
         <div>
-          <p className="font-semibold text-red-800 mb-2">4. Використання тільки для читання</p>
+          <p className="font-semibold text-red-800 mb-2">4. Працюють методи, які не приймають T</p>
           <div className="bg-white p-4 rounded font-mono text-sm">
             <code className="text-gray-800">
               <div>void process(List&lt;?&gt; list) {'{'}</div>
               <div className="ml-4">list.size(); <span className="text-green-600">{'// ✅'}</span></div>
-              <div className="ml-4">list.clear(); <span className="text-green-600">{'// ✅'}</span></div>
               <div className="ml-4">list.isEmpty(); <span className="text-green-600">{'// ✅'}</span></div>
-              <div className="ml-4">list.addAll(other); <span className="text-red-600">{'// ❌'}</span></div>
+              <div className="ml-4">list.contains("a"); <span className="text-green-600">{'// ✅ takes Object'}</span></div>
+              <div className="ml-4">list.remove("a"); <span className="text-green-600">{'// ✅ takes Object'}</span></div>
+              <div className="ml-4">list.clear(); <span className="text-green-600">{'// ✅ no T in signature'}</span></div>
+              <div className="ml-4">list.addAll(List.of("a")); <span className="text-red-600">{'// ❌ takes Collection<? extends E>'}</span></div>
               <div>{'}'}</div>
             </code>
           </div>
@@ -396,9 +401,9 @@ const GenericsPresentation = () => {
       <div className="bg-green-50 p-5 rounded-lg border-l-4 border-green-500">
         <h4 className="font-bold text-green-700 mb-2">💡 Коли використовувати &lt;?&gt;</h4>
         <ul className="text-gray-700 space-y-1 ml-4">
-          <li>• Коли потрібно тільки читати дані</li>
-          <li>• Для методів, що не залежать від типу параметра</li>
-          <li>• Коли тип не важливий для логіки методу</li>
+          <li>• Коли достатньо читати елементи як Object</li>
+          <li>• Для методів, що не залежать від типу параметра (size, isEmpty, clear)</li>
+          <li>• Якщо потрібно читати з конкретним типом — використовуйте <code>&lt;? extends T&gt;</code></li>
         </ul>
       </div>
     </div>
@@ -451,48 +456,53 @@ const GenericsPresentation = () => {
       )
     },
     {
-      title: "Wildcards: Lower Bounded",
-      content: (
-        <div className="space-y-6">
-          <div className="bg-purple-50 p-5 rounded-lg border-l-4 border-purple-500">
-            <h4 className="font-bold text-purple-700 mb-3">Lower Bounded: &lt;? super Type&gt;</h4>
-            <p className="text-gray-700 mb-3">Приймає Type або будь-який його суперклас (Consumer - запис)</p>
-            <div className="bg-white p-4 rounded font-mono text-sm">
-              <code className="text-gray-800">
-                <div className="text-blue-600">{'// Можна додавати Integer та його підкласи'}</div>
-                <div>public static void addIntegers(</div>
-                <div className="ml-8">List&lt;? super Integer&gt; list) {'{'}</div>
-                <div className="ml-4">list.add(1); <span className="text-green-600">{'// OK'}</span></div>
-                <div className="ml-4">list.add(100); <span className="text-green-600">{'// OK'}</span></div>
-                <div>{'}'}</div>
-                <div className="mt-3"></div>
-                <div className="text-blue-600">{'// Можна передати Integer, Number, Object'}</div>
-                <div>List&lt;Integer&gt; integers = new ArrayList&lt;&gt;();</div>
-                <div>List&lt;Number&gt; numbers = new ArrayList&lt;&gt;();</div>
-                <div>List&lt;Object&gt; objects = new ArrayList&lt;&gt;();</div>
-                <div className="mt-2"></div>
-                <div>addIntegers(integers); <span className="text-green-600">{'// OK'}</span></div>
-                <div>addIntegers(numbers); <span className="text-green-600">{'// OK'}</span></div>
-                <div>addIntegers(objects); <span className="text-green-600">{'// OK'}</span></div>
-              </code>
-            </div>
-          </div>
-
-          <div className="bg-orange-50 p-5 rounded-lg">
-            <h4 className="font-bold text-orange-700 mb-3">Обмеження: читання тільки як Object</h4>
-            <div className="bg-white p-4 rounded font-mono text-sm">
-              <code className="text-gray-800">
-                <div>public static void process(</div>
-                <div className="ml-8">List&lt;? super Integer&gt; list) {'{'}</div>
-                <div className="ml-4">Object obj = list.get(0); <span className="text-green-600">{'// Тільки як Object'}</span></div>
-                <div className="ml-4">Integer num = list.get(0); <span className="text-red-600">{'// Помилка!'}</span></div>
-                <div>{'}'}</div>
-              </code>
-            </div>
-          </div>
+  title: "Wildcards: Lower Bounded",
+  content: (
+    <div className="space-y-6">
+      <div className="bg-purple-50 p-5 rounded-lg border-l-4 border-purple-500">
+        <h4 className="font-bold text-purple-700 mb-3">Lower Bounded: &lt;? super Type&gt;</h4>
+        <p className="text-gray-700 mb-3">Приймає Type або будь-який його суперклас (Consumer - запис)</p>
+        <div className="bg-white p-4 rounded font-mono text-sm">
+          <code className="text-gray-800">
+            <div className="text-blue-600">{'// Can add Integer values'}</div>
+            <div>public static void addIntegers(</div>
+            <div className="ml-8">List&lt;? super Integer&gt; list) {'{'}</div>
+            <div className="ml-4">list.add(1); <span className="text-green-600">{'// ✅ OK'}</span></div>
+            <div className="ml-4">list.add(100); <span className="text-green-600">{'// ✅ OK'}</span></div>
+            <div>{'}'}</div>
+            <div className="mt-3"></div>
+            <div className="text-blue-600">{'// Can pass List<Integer>, List<Number>, List<Object>'}</div>
+            <div>List&lt;Integer&gt; integers = new ArrayList&lt;&gt;();</div>
+            <div>List&lt;Number&gt; numbers = new ArrayList&lt;&gt;();</div>
+            <div>List&lt;Object&gt; objects = new ArrayList&lt;&gt;();</div>
+            <div>List&lt;Double&gt; doubles = new ArrayList&lt;&gt;();</div>
+            <div className="mt-2"></div>
+            <div>addIntegers(integers); <span className="text-green-600">{'// ✅ OK'}</span></div>
+            <div>addIntegers(numbers); <span className="text-green-600">{'// ✅ OK'}</span></div>
+            <div>addIntegers(objects); <span className="text-green-600">{'// ✅ OK'}</span></div>
+            <div>addIntegers(doubles); <span className="text-red-600">{'// ❌ Double is not a supertype of Integer'}</span></div>
+          </code>
         </div>
-      )
-    },
+      </div>
+
+      <div className="bg-orange-50 p-5 rounded-lg">
+        <h4 className="font-bold text-orange-700 mb-3">Обмеження: читання тільки як Object</h4>
+        <div className="bg-white p-4 rounded font-mono text-sm">
+          <code className="text-gray-800">
+            <div>public static void process(</div>
+            <div className="ml-8">List&lt;? super Integer&gt; list) {'{'}</div>
+            <div className="ml-4">Object obj = list.get(0); <span className="text-green-600">{'// ✅ only as Object'}</span></div>
+            <div className="ml-4">Integer num = list.get(0); <span className="text-red-600">{'// ❌ compile error'}</span></div>
+            <div className="mt-2"></div>
+            <div className="ml-4 text-blue-600">{'// list may be List<Number> or List<Object>,'}</div>
+            <div className="ml-4 text-blue-600">{'// so the element is not guaranteed to be Integer'}</div>
+            <div>{'}'}</div>
+          </code>
+        </div>
+      </div>
+    </div>
+  )
+},
     {
       title: "PECS принцип",
       content: (
