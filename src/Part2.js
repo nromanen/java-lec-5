@@ -164,57 +164,72 @@ const GenericsPresentation = () => {
               <div><strong>K</strong> - Key (ключ)</div>
               <div><strong>V</strong> - Value (значення)</div>
               <div><strong>N</strong> - Number (число)</div>
-              <div><strong>S, U, V</strong> - додаткові типи</div>
+              <div><strong>S, U</strong> - додаткові типи</div>
             </div>
           </div>
         </div>
       )
     },
     {
-      title: "Generic методи",
-      content: (
-        <div className="space-y-6">
-          <div className="bg-blue-50 p-5 rounded-lg">
-            <h4 className="font-bold text-blue-700 mb-3">Синтаксис generic методу</h4>
-            <div className="bg-white p-4 rounded font-mono text-sm">
-              <code className="text-gray-800">
-                <div className="text-blue-600">{'// <T> перед типом повернення'}</div>
-                <div>public class Utils {'{'}</div>
-                <div className="ml-4 mt-2">public static &lt;T&gt; void printArray(T[] array) {'{'}</div>
-                <div className="ml-8">for (T element : array) {'{'}</div>
-                <div className="ml-12">System.out.println(element);</div>
-                <div className="ml-8">{'}'}</div>
-                <div className="ml-4">{'}'}</div>
-                <div className="mt-2 ml-4">public static &lt;T&gt; T getFirst(List&lt;T&gt; list) {'{'}</div>
-                <div className="ml-8">return list.isEmpty() ? null : list.get(0);</div>
-                <div className="ml-4">{'}'}</div>
-                <div>{'}'}</div>
-              </code>
-            </div>
-          </div>
-
-          <div className="bg-green-50 p-5 rounded-lg">
-            <h4 className="font-bold text-green-700 mb-3">Виклик generic методів</h4>
-            <div className="bg-white p-4 rounded font-mono text-sm">
-              <code className="text-gray-800">
-                <div className="text-blue-600">{'// Автоматичне визначення типу'}</div>
-                <div>Integer[] numbers = {'{'}1, 2, 3{'}'};</div>
-                <div>Utils.printArray(numbers); <span className="text-green-600">{'// T = Integer'}</span></div>
-                <div className="mt-2"></div>
-                <div>String[] words = {"{"}"Hello", "World"{"}"};</div>
-                <div>Utils.printArray(words); <span className="text-green-600">{'// T = String'}</span></div>
-                <div className="mt-2"></div>
-                <div className="text-blue-600">{'// Явне вказування типу (рідко потрібно)'}</div>
-                <div>Utils.&lt;String&gt;printArray(words);</div>
-                <div className="mt-2"></div>
-                <div>List&lt;Integer&gt; list = Arrays.asList(1, 2, 3);</div>
-                <div>Integer first = Utils.getFirst(list);</div>
-              </code>
-            </div>
-          </div>
+  title: "Generic методи",
+  content: (
+    <div className="space-y-6">
+      <div className="bg-blue-50 p-5 rounded-lg">
+        <h4 className="font-bold text-blue-700 mb-3">Синтаксис generic методу</h4>
+        <div className="bg-white p-4 rounded font-mono text-sm">
+          <code className="text-gray-800">
+            <div className="text-blue-600">{'// <T> goes before the return type'}</div>
+            <div>public class Utils {'{'}</div>
+            <div className="ml-4 mt-2">public static &lt;T&gt; void printArray(T[] array) {'{'}</div>
+            <div className="ml-8">for (T element : array) {'{'}</div>
+            <div className="ml-12">System.out.println(element);</div>
+            <div className="ml-8">{'}'}</div>
+            <div className="ml-4">{'}'}</div>
+            <div className="mt-2 ml-4 text-blue-600">{'// T links the parameter and the return type'}</div>
+            <div className="ml-4">public static &lt;T&gt; T getFirst(List&lt;T&gt; list) {'{'}</div>
+            <div className="ml-8">return list.isEmpty() ? null : list.get(0);</div>
+            <div className="ml-4">{'}'}</div>
+            <div>{'}'}</div>
+          </code>
         </div>
-      )
-    },
+      </div>
+
+      <div className="bg-green-50 p-5 rounded-lg">
+        <h4 className="font-bold text-green-700 mb-3">Виклик generic методів</h4>
+        <div className="bg-white p-4 rounded font-mono text-sm">
+          <code className="text-gray-800">
+            <div className="text-blue-600">{'// Type is inferred automatically'}</div>
+            <div>Integer[] numbers = {'{'}1, 2, 3{'}'};</div>
+            <div>Utils.printArray(numbers); <span className="text-green-600">{'// T = Integer'}</span></div>
+            <div className="mt-2"></div>
+            <div>String[] words = {"{"}"Hello", "World"{"}"};</div>
+            <div>Utils.printArray(words); <span className="text-green-600">{'// T = String'}</span></div>
+            <div className="mt-2"></div>
+            <div className="text-blue-600">{'// Explicit type (rarely needed)'}</div>
+            <div>Utils.&lt;String&gt;printArray(words);</div>
+            <div className="mt-2"></div>
+            <div>List&lt;String&gt; list = Arrays.asList("a", "b");</div>
+            <div>String first = Utils.getFirst(list); <span className="text-green-600">{'// T = String, no cast needed'}</span></div>
+          </code>
+        </div>
+      </div>
+
+      <div className="bg-blue-50 p-5 rounded-lg">
+        <h4 className="font-bold text-blue-700 mb-3">💡 Коли &lt;T&gt; справді потрібен</h4>
+        <p className="text-gray-800 mb-3">
+          Якщо T використовується в сигнатурі лише один раз, його можна замінити: List&lt;T&gt; → List&lt;?&gt;, T[] → Object[].
+          &lt;T&gt; потрібен, коли він пов'язує кілька місць — наприклад, параметр і тип повернення:
+        </p>
+        <div className="bg-white p-4 rounded font-mono text-sm">
+          <code className="text-gray-800">
+            <div>String a = Utils.getFirst(list); <span className="text-green-600">{'// ✅ with <T>'}</span></div>
+            <div>String b = (String) getFirstObject(list); <span className="text-green-600">{'// without <T>: cast required'}</span></div>
+          </code>
+        </div>
+      </div>
+    </div>
+  )
+},
     {
       title: "Generic інтерфейси",
       content: (
