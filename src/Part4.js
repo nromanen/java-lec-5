@@ -124,6 +124,44 @@ const FunctionalPresentation = () => {
                             Той самий запис (a, b) -&gt; a + b означатиме інше, якщо змінна матиме інший тип
                         </p>
                     </div>
+
+                    <div className="bg-yellow-50 p-5 rounded-lg border-l-4 border-yellow-500">
+                        <h4 className="font-bold text-yellow-700 mb-3">Lambda ≠ анонімний клас</h4>
+                        <p className="text-gray-700 mb-3">
+                            Lambda виглядає як скорочений анонімний клас, але це різні речі
+                        </p>
+                        <div className="bg-white p-4 rounded font-mono text-xs">
+                            <div className="text-blue-600">{'// this: lambda has no own instance'}</div>
+                            <div>class Service {'{'}</div>
+                            <div className="ml-4">String name = "Service";</div>
+                            <div className="ml-4 mt-2">void run() {'{'}</div>
+                            <div className="ml-8">Runnable lambda = () -&gt; System.out.println(this.name);</div>
+                            <div className="ml-8 text-green-600">{'// ✅ this = Service'}</div>
+                            <div className="ml-8 mt-2">Runnable anon = new Runnable() {'{'}</div>
+                            <div className="ml-12">@Override public void run() {'{'}</div>
+                            <div className="ml-16">System.out.println(this.name); <span className="text-red-600">{'// ❌ this = Runnable'}</span></div>
+                            <div className="ml-12">{'}'}</div>
+                            <div className="ml-8">{'};'}</div>
+                            <div className="ml-4">{'}'}</div>
+                            <div>{'}'}</div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3 mt-3 text-sm">
+                            <div className="bg-white p-3 rounded">
+                                <div className="font-bold text-gray-800 mb-1">Lambda</div>
+                                <div className="text-gray-700">• Тільки функціональний інтерфейс</div>
+                                <div className="text-gray-700">• Не має стану (полів)</div>
+                                <div className="text-gray-700">• this = зовнішній клас</div>
+                                <div className="text-gray-700">• Окремого .class-файлу немає</div>
+                            </div>
+                            <div className="bg-white p-3 rounded">
+                                <div className="font-bold text-gray-800 mb-1">Анонімний клас</div>
+                                <div className="text-gray-700">• Будь-який інтерфейс або клас</div>
+                                <div className="text-gray-700">• Може мати поля і кілька методів</div>
+                                <div className="text-gray-700">• this = сам анонімний об'єкт</div>
+                                <div className="text-gray-700">• Окремий файл Service$1.class</div>
+                            </div>
+                        </div>
+                    </div>
         
                     <div className="bg-blue-50 p-5 rounded-lg">
                         <h4 className="font-bold text-blue-700 mb-3">Базовий синтаксис</h4>
