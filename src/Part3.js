@@ -908,7 +908,7 @@ const CollectionsPresentation = () => {
               <li>✓ Всі колекції використовують Generics для типобезпеки</li>
               <li>✓ HashMap/HashSet найшвидші - O(1) для більшості операцій</li>
               <li>✓ TreeMap/TreeSet сортують автоматично - O(log n)</li>
-              <li>✓ ArrayList краще для читання, LinkedList для модифікацій</li>
+              <li>✓ ArrayList краще в більшості випадків, крім частих операцій на кінцях або дій через ітератордля (тоді LinkedList)</li>
               <li>✓ Collections та Arrays - корисні utility класи</li>
             </ul>
           </div>
