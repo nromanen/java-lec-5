@@ -119,6 +119,7 @@ const CollectionsPresentation = () => {
                   <div>E set(int index, E element);</div>
                   <div>void add(int index, E element);</div>
                   <div>int indexOf(Object o);</div>
+                  <div>E remove(int index);</div>
                 </code>
               </div>
             </div>
@@ -128,7 +129,6 @@ const CollectionsPresentation = () => {
               <p className="text-sm text-gray-700 mb-2">Колекція унікальних елементів</p>
               <div className="bg-white p-2 rounded font-mono text-xs">
                 <code>
-                  <div>boolean add(E e);</div>
                   <div className="text-gray-500 text-xs mt-1">{'// Ті ж методи що й Collection'}</div>
                   <div className="text-gray-500 text-xs">{'// але дублікати не додаються'}</div>
                 </code>
@@ -137,12 +137,18 @@ const CollectionsPresentation = () => {
 
             <div className="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
               <h4 className="font-bold text-green-700 mb-2">{"Queue<E>"}</h4>
-              <p className="text-sm text-gray-700 mb-2">Черга для обробки елементів</p>
+              <p className="text-sm text-gray-700 mb-2">Черга для обробки елементів. Кожна операція має два варіанти: з винятком і зі спеціальним значенням</p>
               <div className="bg-white p-2 rounded font-mono text-xs">
                 <code>
-                  <div>boolean offer(E e);</div>
-                  <div>E poll();</div>
-                  <div>E peek();</div>
+                  <div className="text-blue-600">{'// insert'}</div>
+                  <div>boolean add(E e); <span className="text-gray-700">{'// throws'}</span></div>
+                  <div>boolean offer(E e); <span className="text-gray-700">{'// false'}</span></div>
+                  <div className="text-blue-600">{'// remove head'}</div>
+                  <div>E remove(); <span className="text-gray-700">{'// throws'}</span></div>
+                  <div>E poll(); <span className="text-gray-700">{'// null'}</span></div>
+                  <div className="text-blue-600">{'// inspect head'}</div>
+                  <div>E element(); <span className="text-gray-700">{'// throws'}</span></div>
+                  <div>E peek(); <span className="text-gray-700">{'// null'}</span></div>
                 </code>
               </div>
             </div>
@@ -165,90 +171,97 @@ const CollectionsPresentation = () => {
       )
     },
     {
-      title: "ArrayList vs LinkedList",
-      content: (
-        <div className="space-y-6">
-          <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-4 rounded-lg">
-            <h3 className="text-2xl font-bold">List: Реалізації</h3>
+  title: "ArrayList vs LinkedList",
+  content: (
+    <div className="space-y-6">
+      <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-4 rounded-lg">
+        <h3 className="text-2xl font-bold">List: Реалізації</h3>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-blue-50 p-5 rounded-lg border-l-4 border-blue-500">
+          <h4 className="font-bold text-blue-700 mb-3 text-xl">ArrayList</h4>
+          <p className="text-gray-700 mb-3">Динамічний масив. Швидкий доступ за індексом.</p>
+
+          <div className="bg-white p-3 rounded mb-3">
+            <p className="font-semibold text-gray-700 mb-2">Внутрішня структура:</p>
+            <div className="font-mono text-xs text-gray-600">Object[] elementData;</div>
+            <p className="text-sm text-gray-600 mt-2">Зберігає елементи в масиві, збільшує розмір при потребі</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-blue-50 p-5 rounded-lg border-l-4 border-blue-500">
-              <h4 className="font-bold text-blue-700 mb-3 text-xl">ArrayList</h4>
-              <p className="text-gray-700 mb-3">Динамічний масив. Швидкий доступ за індексом.</p>
-              
-              <div className="bg-white p-3 rounded mb-3">
-                <p className="font-semibold text-gray-700 mb-2">Внутрішня структура:</p>
-                <div className="font-mono text-xs text-gray-600">Object[] elementData;</div>
-                <p className="text-sm text-gray-600 mt-2">Зберігає елементи в масиві, збільшує розмір при потребі</p>
-              </div>
-
-              <div className="space-y-2 text-sm">
-                <div className="bg-green-50 p-2 rounded">
-                  <strong className="text-green-700">✓ Швидко:</strong>
-                  <div className="text-gray-700">• Доступ за індексом O(1)</div>
-                  <div className="text-gray-700">• Додавання в кінець O(1) амортизовано</div>
-                </div>
-                <div className="bg-red-50 p-2 rounded">
-                  <strong className="text-red-700">✗ Повільно:</strong>
-                  <div className="text-gray-700">• Вставка/видалення з середини O(n)</div>
-                  <div className="text-gray-700">• Пошук елемента O(n)</div>
-                </div>
-              </div>
-
-              <div className="bg-white p-3 rounded mt-3 font-mono text-xs">
-                <div>{"List<String> list = new ArrayList<>();"}</div>
-                <div>list.add("Java");</div>
-                <div>String s = list.get(0);</div>
-                <div>list.add(0, "Hi");</div>
-              </div>
+          <div className="space-y-2 text-sm">
+            <div className="bg-green-50 p-2 rounded">
+              <strong className="text-green-700">✓ Швидко:</strong>
+              <div className="text-gray-700">• Доступ за індексом O(1)</div>
+              <div className="text-gray-700">• Додавання в кінець O(1) амортизовано</div>
             </div>
-
-            <div className="bg-purple-50 p-5 rounded-lg border-l-4 border-purple-500">
-              <h4 className="font-bold text-purple-700 mb-3 text-xl">LinkedList</h4>
-              <p className="text-gray-700 mb-3">Двозв'язний список. Швидка вставка/видалення.</p>
-              
-              <div className="bg-white p-3 rounded mb-3">
-                <p className="font-semibold text-gray-700 mb-2">Внутрішня структура:</p>
-                <div className="font-mono text-xs text-gray-600">
-                  <div>Node: item, next, prev</div>
-                </div>
-                <p className="text-sm text-gray-600 mt-2">Кожен елемент - окремий об'єкт з посиланнями</p>
-              </div>
-
-              <div className="space-y-2 text-sm">
-                <div className="bg-green-50 p-2 rounded">
-                  <strong className="text-green-700">✓ Швидко:</strong>
-                  <div className="text-gray-700">• Вставка на початок/кінець O(1)</div>
-                  <div className="text-gray-700">• Видалення початку/кінця O(1)</div>
-                  <div className="text-gray-700">• Реалізує Deque</div>
-                </div>
-                <div className="bg-red-50 p-2 rounded">
-                  <strong className="text-red-700">✗ Повільно:</strong>
-                  <div className="text-gray-700">• Доступ за індексом O(n)</div>
-                  <div className="text-gray-700">• Більше пам'яті (посилання)</div>
-                </div>
-              </div>
-
-              <div className="bg-white p-3 rounded mt-3 font-mono text-xs">
-                <div>{"LinkedList<String> list = new LinkedList<>();"}</div>
-                <div>list.addFirst("Hi");</div>
-                <div>String s = list.get(100);</div>
-                <div>list.removeFirst();</div>
-              </div>
+            <div className="bg-red-50 p-2 rounded">
+              <strong className="text-red-700">✗ Повільно:</strong>
+              <div className="text-gray-700">• Вставка/видалення з середини O(n) — зсув елементів</div>
+              <div className="text-gray-700">• Вставка/видалення на початку O(n)</div>
+              <div className="text-gray-700">• Пошук за значенням O(n)</div>
             </div>
           </div>
 
-          <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-400">
-            <p className="font-semibold text-gray-800">💡 Коли що використовувати:</p>
-            <div className="grid grid-cols-2 gap-3 mt-2 text-sm">
-              <div><strong>ArrayList:</strong> багато читань, нечасті модифікації</div>
-              <div><strong>LinkedList:</strong> часті вставки/видалення на початку/кінці</div>
-            </div>
+          <div className="bg-white p-3 rounded mt-3 font-mono text-xs">
+            <div>{"List<String> list = new ArrayList<>();"}</div>
+            <div>list.add("Java");</div>
+            <div>{"String s = list.get(0);   // O(1)"}</div>
+            <div>{'list.add(0, "Hi");       // O(n)'}</div>
           </div>
         </div>
-      )
-    },
+
+        <div className="bg-purple-50 p-5 rounded-lg border-l-4 border-purple-500">
+          <h4 className="font-bold text-purple-700 mb-3 text-xl">LinkedList</h4>
+          <p className="text-gray-700 mb-3">Двозв'язний список. Швидка вставка/видалення на кінцях.</p>
+
+          <div className="bg-white p-3 rounded mb-3">
+            <p className="font-semibold text-gray-700 mb-2">Внутрішня структура:</p>
+            <div className="font-mono text-xs text-gray-600">
+              <div>Node: item, next, prev</div>
+            </div>
+            <p className="text-sm text-gray-600 mt-2">Кожен елемент - окремий об'єкт з посиланнями</p>
+          </div>
+
+          <div className="space-y-2 text-sm">
+            <div className="bg-green-50 p-2 rounded">
+              <strong className="text-green-700">✓ Швидко:</strong>
+              <div className="text-gray-700">• Вставка на початок/кінець O(1)</div>
+              <div className="text-gray-700">• Видалення початку/кінця O(1)</div>
+              <div className="text-gray-700">• Вставка/видалення через ітератор O(1)</div>
+              <div className="text-gray-700">• Реалізує Deque</div>
+            </div>
+            <div className="bg-red-50 p-2 rounded">
+              <strong className="text-red-700">✗ Повільно:</strong>
+              <div className="text-gray-700">• Доступ за індексом O(n)</div>
+              <div className="text-gray-700">• Вставка/видалення посередині O(n) — треба дійти до позиції</div>
+              <div className="text-gray-700">• Пошук за значенням O(n)</div>
+              <div className="text-gray-700">• Більше пам'яті (посилання)</div>
+            </div>
+          </div>
+
+          <div className="bg-white p-3 rounded mt-3 font-mono text-xs">
+            <div>{"LinkedList<String> list = new LinkedList<>();"}</div>
+            <div>{'list.addFirst("Hi");     // O(1)'}</div>
+            <div>{"String s = list.get(100); // O(n)"}</div>
+            <div>{"list.removeFirst();      // O(1)"}</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-400">
+        <p className="font-semibold text-gray-800">💡 Коли що використовувати:</p>
+        <div className="grid grid-cols-2 gap-3 mt-2 text-sm">
+          <div><strong>ArrayList:</strong> вибір за замовчуванням — доступ за індексом, додавання в кінець, обхід</div>
+          <div><strong>LinkedList:</strong> часті вставки/видалення на початку/кінці (хоча для черги/стека ArrayDeque зазвичай швидший)</div>
+        </div>
+        <p className="text-sm text-gray-700 mt-2">
+          На практиці ArrayList часто виграє навіть при вставках посередині: зсув елементів у масиві швидший за обхід вузлів, бо дані лежать поруч у пам'яті
+        </p>
+      </div>
+    </div>
+  )
+},
     {
       title: "HashSet vs TreeSet vs LinkedHashSet",
       content: (
