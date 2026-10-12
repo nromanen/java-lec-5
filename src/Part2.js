@@ -426,51 +426,66 @@ const GenericsPresentation = () => {
   )
 },
     {
-      title: "Wildcards: Upper Bounded",
-      content: (
-        <div className="space-y-6">
-          <div className="bg-green-50 p-5 rounded-lg border-l-4 border-green-500">
-            <h4 className="font-bold text-green-700 mb-3">Upper Bounded: &lt;? extends Type&gt;</h4>
-            <p className="text-gray-700 mb-3">Приймає Type або будь-який його підклас (Producer - читання)</p>
-            <div className="bg-white p-4 rounded font-mono text-sm">
-              <code className="text-gray-800">
-                <div className="text-blue-600">{'// Працює з Number та всіма підкласами'}</div>
-                <div>public static double sum(List&lt;? extends Number&gt; list) {'{'}</div>
-                <div className="ml-4">double total = 0;</div>
-                <div className="ml-4">for (Number num : list) {'{'}</div>
-                <div className="ml-8">total += num.doubleValue();</div>
-                <div className="ml-4">{'}'}</div>
-                <div className="ml-4">return total;</div>
-                <div>{'}'}</div>
-                <div className="mt-3"></div>
-                <div className="text-blue-600">{'// Можна передати різні типи'}</div>
-                <div>List&lt;Integer&gt; integers = Arrays.asList(1, 2, 3);</div>
-                <div>List&lt;Double&gt; doubles = Arrays.asList(1.1, 2.2);</div>
-                <div>sum(integers); <span className="text-green-600">{'// OK: Integer extends Number'}</span></div>
-                <div>sum(doubles); <span className="text-green-600">{'// OK: Double extends Number'}</span></div>
-              </code>
-            </div>
-          </div>
-
-          <div className="bg-red-50 p-5 rounded-lg">
-            <h4 className="font-bold text-red-700 mb-3">Обмеження: не можна писати</h4>
-            <div className="bg-white p-4 rounded font-mono text-sm">
-              <code className="text-gray-800">
-                <div>public static void addNumbers(</div>
-                <div className="ml-8">List&lt;? extends Number&gt; list) {'{'}</div>
-                <div className="ml-4">list.add(1); <span className="text-red-600">{'// Помилка!'}</span></div>
-                <div className="ml-4">list.add(1.5); <span className="text-red-600">{'// Помилка!'}</span></div>
-                <div className="ml-4">list.add(null); <span className="text-green-600">{'// Тільки null'}</span></div>
-                <div className="mt-2"></div>
-                <div className="text-blue-600">{'// Можна тільки читати'}</div>
-                <div>Number num = list.get(0); <span className="text-green-600">{'// OK'}</span></div>
-                <div>{'}'}</div>
-              </code>
-            </div>
-          </div>
+  title: "Wildcards: Upper Bounded",
+  content: (
+    <div className="space-y-6">
+      <div className="bg-green-50 p-5 rounded-lg border-l-4 border-green-500">
+        <h4 className="font-bold text-green-700 mb-3">Upper Bounded: &lt;? extends Type&gt;</h4>
+        <p className="text-gray-700 mb-3">Приймає Type або будь-який його підклас (Producer - читання)</p>
+        <div className="bg-white p-4 rounded font-mono text-sm">
+          <code className="text-gray-800">
+            <div className="text-blue-600">{'// Works with Number and all its subclasses'}</div>
+            <div>public static double sum(List&lt;? extends Number&gt; list) {'{'}</div>
+            <div className="ml-4">double total = 0;</div>
+            <div className="ml-4">for (Number num : list) {'{'}</div>
+            <div className="ml-8">total += num.doubleValue();</div>
+            <div className="ml-4">{'}'}</div>
+            <div className="ml-4">return total;</div>
+            <div>{'}'}</div>
+            <div className="mt-3"></div>
+            <div className="text-blue-600">{'// Different list types can be passed'}</div>
+            <div>List&lt;Integer&gt; integers = Arrays.asList(1, 2, 3);</div>
+            <div>List&lt;Double&gt; doubles = Arrays.asList(1.1, 2.2);</div>
+            <div>sum(integers); <span className="text-green-600">{'// ✅ Integer extends Number'}</span></div>
+            <div>sum(doubles); <span className="text-green-600">{'// ✅ Double extends Number'}</span></div>
+          </code>
         </div>
-      )
-    },
+      </div>
+
+      <div className="bg-red-50 p-5 rounded-lg">
+        <h4 className="font-bold text-red-700 mb-3">Обмеження: не можна додавати</h4>
+        <div className="bg-white p-4 rounded font-mono text-sm">
+          <code className="text-gray-800">
+            <div>public static void addNumbers(</div>
+            <div className="ml-8">List&lt;? extends Number&gt; list) {'{'}</div>
+            <div className="ml-4">list.add(1); <span className="text-red-600">{'// ❌ list may be List<Double>'}</span></div>
+            <div className="ml-4">list.add(1.5); <span className="text-red-600">{'// ❌ list may be List<Integer>'}</span></div>
+            <div className="ml-4">list.add(null); <span className="text-green-600">{'// ✅ only null'}</span></div>
+            <div className="mt-2"></div>
+            <div className="ml-4 text-blue-600">{'// Reading works as Number'}</div>
+            <div className="ml-4">Number num = list.get(0); <span className="text-green-600">{'// ✅'}</span></div>
+            <div>{'}'}</div>
+          </code>
+        </div>
+      </div>
+
+      <div className="bg-green-50 p-5 rounded-lg">
+        <h4 className="font-bold text-green-700 mb-3">&lt;? extends Number&gt; vs &lt;T extends Number&gt;</h4>
+        <p className="text-gray-700 mb-3">
+          T спочатку оголошується перед типом повернення, а в List&lt;...&gt; лише використовується.
+          Якщо T потрібен у сигнатурі лише один раз — простіше написати ?
+        </p>
+        <div className="bg-white p-4 rounded font-mono text-sm">
+          <code className="text-gray-800">
+            <div>double sum(List&lt;? extends Number&gt; list) <span className="text-green-600">{'// ✅ no name needed'}</span></div>
+            <div>&lt;T extends Number&gt; double sum(List&lt;T&gt; list) <span className="text-green-600">{'// ✅ declare T, then use it'}</span></div>
+            <div>double sum(List&lt;T extends Number&gt; list) <span className="text-red-600">{'// ❌ cannot declare T inside List<...>'}</span></div>
+          </code>
+        </div>
+      </div>
+    </div>
+  )
+},
     {
   title: "Wildcards: Lower Bounded",
   content: (
