@@ -97,8 +97,11 @@ const CollectionsPresentation = () => {
             <div className="bg-white p-3 rounded font-mono text-sm">
               <code className="text-gray-800">
                 <div>boolean add(E e);</div>
+                <div>{"boolean addAll(Collection<? extends E> c);"}</div>
                 <div>boolean remove(Object o);</div>
+                <div>{"boolean removeIf(Predicate<? super E> filter);"}</div>
                 <div>boolean contains(Object o);</div>
+                <div>{"boolean containsAll(Collection<?> c);"}</div>
                 <div>int size();</div>
                 <div>void clear();</div>
                 <div>{"Iterator<E> iterator();"}</div>
