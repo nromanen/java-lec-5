@@ -401,8 +401,9 @@ const GenericsPresentation = () => {
       <div className="bg-green-50 p-5 rounded-lg border-l-4 border-green-500">
         <h4 className="font-bold text-green-700 mb-2">💡 Коли використовувати &lt;?&gt;</h4>
         <ul className="text-gray-700 space-y-1 ml-4">
-          <li>• Коли достатньо читати елементи як Object</li>
-          <li>• Для методів, що не залежать від типу параметра (size, isEmpty, clear)</li>
+          <li>• Коли метод має приймати Box&lt;String&gt;, Box&lt;Integer&gt; тощо — Box&lt;Object&gt; їх не прийме, бо generics інваріантні</li>
+          <li>• Коли достатньо отримувати значення як Object</li>
+          <li>• Коли метод використовує лише операції, що не залежать від T (наприклад, size, isEmpty, clear у колекціях)</li>
           <li>• Якщо потрібно читати з конкретним типом — використовуйте <code>&lt;? extends T&gt;</code></li>
         </ul>
       </div>
@@ -445,10 +446,10 @@ const GenericsPresentation = () => {
                 <div className="ml-4">list.add(1); <span className="text-red-600">{'// Помилка!'}</span></div>
                 <div className="ml-4">list.add(1.5); <span className="text-red-600">{'// Помилка!'}</span></div>
                 <div className="ml-4">list.add(null); <span className="text-green-600">{'// Тільки null'}</span></div>
-                <div>{'}'}</div>
                 <div className="mt-2"></div>
                 <div className="text-blue-600">{'// Можна тільки читати'}</div>
                 <div>Number num = list.get(0); <span className="text-green-600">{'// OK'}</span></div>
+                <div>{'}'}</div>
               </code>
             </div>
           </div>
