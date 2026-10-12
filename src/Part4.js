@@ -97,66 +97,109 @@ const FunctionalPresentation = () => {
                     <div className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white p-4 rounded-lg">
                         <h3 className="text-2xl font-bold">Lambda: (параметри) -&gt; тіло</h3>
                     </div>
-
+        
+                    <div className="bg-purple-50 p-5 rounded-lg border-l-4 border-purple-500">
+                        <h4 className="font-bold text-purple-700 mb-3">Що таке lambda?</h4>
+                        <p className="text-gray-700 mb-3">
+                            Lambda — це скорочений запис реалізації функціонального інтерфейсу, тобто інтерфейсу з одним абстрактним методом.
+                            Зліва від -&gt; параметри цього методу, справа його тіло. Назву методу писати не треба: він у інтерфейсі один
+                        </p>
+                        <div className="bg-white p-4 rounded font-mono text-xs">
+                            <div className="text-blue-600">{'// Functional interface: exactly one abstract method'}</div>
+                            <div>interface Calculator {'{'}</div>
+                            <div className="ml-4">int apply(int a, int b);</div>
+                            <div>{'}'}</div>
+                            <div className="mt-3 text-blue-600">{'// Anonymous class: the same thing, 5 lines'}</div>
+                            <div>Calculator add = new Calculator() {'{'}</div>
+                            <div className="ml-4">@Override public int apply(int a, int b) {'{'}</div>
+                            <div className="ml-8">return a + b;</div>
+                            <div className="ml-4">{'}'}</div>
+                            <div>{'};'}</div>
+                            <div className="mt-3 text-blue-600">{'// Lambda: parameter types and method name are inferred'}</div>
+                            <div>Calculator add = (a, b) -&gt; a + b;</div>
+                            <div className="mt-3">add.apply(2, 3); <span className="text-green-600">{'// 5 — still an ordinary method call'}</span></div>
+                        </div>
+                        <p className="text-gray-700 mt-3">
+                            Типи параметрів компілятор бере з сигнатури методу інтерфейсу — це target typing.
+                            Той самий запис (a, b) -&gt; a + b означатиме інше, якщо змінна матиме інший тип
+                        </p>
+                    </div>
+        
                     <div className="bg-blue-50 p-5 rounded-lg">
                         <h4 className="font-bold text-blue-700 mb-3">Базовий синтаксис</h4>
                         <div className="bg-white p-4 rounded text-sm space-y-2">
                             <div className="text-blue-600">{'// Без параметрів'}</div>
                             <div className="font-mono">() -&gt; System.out.println("Hello")</div>
-
+        
                             <div className="mt-3 text-blue-600">{'// Один параметр (дужки можна опустити)'}</div>
                             <div className="font-mono">x -&gt; x * x</div>
-
+        
                             <div className="mt-3 text-blue-600">{'// Кілька параметрів - один вираз'}</div>
                             <div className="font-mono">(x, y) -&gt; x + y</div>
-
+        
                             <div className="mt-3 text-blue-600">{'// Кілька параметрів - один вираз з return'}</div>
                             <div className="font-mono">(x, y) -&gt; {'{ return x + y; }'}</div>
-
+        
                             <div className="mt-3 text-blue-600">{'// Блок коду з фігурними дужками'}</div>
                             <div className="font-mono">(x, y) -&gt; {'{'}</div>
                             <div className="font-mono ml-4">int result = x + y;</div>
                             <div className="font-mono ml-4">System.out.println("Результат: " + result);</div>
                             <div className="font-mono ml-4">return result;</div>
                             <div className="font-mono">{'}'}</div>
+        
+                            <div className="mt-3 text-blue-600">{'// Типи параметрів можна вказати явно (рідко потрібно)'}</div>
+                            <div className="font-mono">(int x, int y) -&gt; x + y</div>
                         </div>
                     </div>
-
+        
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="bg-orange-50 p-5 rounded-lg border-l-4 border-orange-500">
                             <h4 className="font-bold text-orange-700 mb-3">До Lambda (Java 7)</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div>List&lt;String&gt; list = ...</div>
-                                <div className="mt-2">list.forEach(new Consumer() )</div>
-                                <div className="mt-2 text-red-600">{'// 7 рядків коду!'}</div>
+                                <div className="mt-2">for (String s : list) {'{'}</div>
+                                <div className="ml-4">System.out.println(s);</div>
+                                <div>{'}'}</div>
+                                <div className="mt-2 text-blue-600">{'// or an anonymous class:'}</div>
+                                <div>Collections.sort(list, new Comparator&lt;String&gt;() {'{'}</div>
+                                <div className="ml-4">@Override public int compare(String a, String b) {'{'}</div>
+                                <div className="ml-8">return a.compareTo(b);</div>
+                                <div className="ml-4">{'}'}</div>
+                                <div>{'});'}</div>
                             </div>
                         </div>
-
+        
                         <div className="bg-green-50 p-5 rounded-lg border-l-4 border-green-500">
                             <h4 className="font-bold text-green-700 mb-3">З Lambda (Java 8+)</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div>List&lt;String&gt; list = ...</div>
-                                <div className="mt-2">list.forEach(s -&gt; println(s));</div>
-                                <div className="mt-2">list.forEach(System.out::println);</div>
-                                <div className="mt-2 text-green-600">{'// Всього 1 рядок!'}</div>
+                                <div className="mt-2">list.forEach(s -&gt; System.out.println(s));</div>
+                                <div>list.forEach(System.out::println);</div>
+                                <div className="mt-2 text-blue-600">{'// the same sorting:'}</div>
+                                <div>list.sort((a, b) -&gt; a.compareTo(b));</div>
+                                <div>list.sort(Comparator.naturalOrder());</div>
+                                <div className="mt-2 text-green-600">{'// one line instead of five'}</div>
                             </div>
                         </div>
                     </div>
-
+        
                     <div className="bg-purple-50 p-5 rounded-lg">
                         <h4 className="font-bold text-purple-700 mb-3">Приклади використання</h4>
                         <div className="bg-white p-4 rounded font-mono text-xs space-y-2">
-                            <div className="text-blue-600">{'// Сортування'}</div>
+                            <div className="text-blue-600">{'// Comparator'}</div>
                             <div>names.sort((a, b) -&gt; a.compareTo(b));</div>
-
+        
                             <div className="mt-3 text-blue-600">{'// Runnable'}</div>
-                            <div>new Thread(() -&gt; println("Hello")).start();</div>
-
-                            <div className="mt-3 text-blue-600">{'// Власний FI'}</div>
+                            <div>new Thread(() -&gt; System.out.println("Hello")).start();</div>
+        
+                            <div className="mt-3 text-blue-600">{'// Predicate'}</div>
+                            <div>list.removeIf(s -&gt; s.isBlank());</div>
+        
+                            <div className="mt-3 text-blue-600">{'// Власний функціональний інтерфейс'}</div>
                             <div>Calculator add = (a, b) -&gt; a + b;</div>
                         </div>
                     </div>
-
+        
                     <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-400">
                         <h4 className="font-bold text-yellow-700 mb-3">⚠️ Lambda та змінні: final або effectively final</h4>
                         <div className="text-sm text-gray-700 mb-2">
