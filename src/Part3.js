@@ -161,8 +161,16 @@ const CollectionsPresentation = () => {
                   <div>V put(K key, V value);</div>
                   <div>V get(Object key);</div>
                   <div>V remove(Object key);</div>
+                  <div>boolean containsKey(Object key);</div>
                   <div>{"Set<K> keySet();"}</div>
                   <div>{"Collection<V> values();"}</div>
+                  <div>{"Set<Map.Entry<K,V>> entrySet();"}</div>
+                  <div className="text-blue-600 mt-1">{'// Java 8+'}</div>
+                  <div>V getOrDefault(Object key, V def);</div>
+                  <div>V putIfAbsent(K key, V value);</div>
+                  <div>{"V computeIfAbsent(K key, Function<...> fn);"}</div>
+                  <div>{"V merge(K key, V value, BiFunction<...> fn);"}</div>
+                  <div>{"void forEach(BiConsumer<...> action);"}</div>
                 </code>
               </div>
             </div>
