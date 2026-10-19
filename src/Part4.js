@@ -269,7 +269,6 @@ const FunctionalPresentation = () => {
             )
         },
         {
-       {
             title: "Method References",
             content: (
                 <div className="space-y-6">
