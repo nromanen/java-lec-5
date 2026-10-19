@@ -848,7 +848,6 @@ const CollectionsPresentation = () => {
           
               <div className="bg-blue-50 p-2 rounded mt-2">
                 <p className="text-xs text-gray-700"><strong>Оптимізація:</strong> 1–2 елементи зберігаються в полях без масиву, а порожня колекція є спільним синглтоном (List.of() == List.of()) = мінімальне використання пам'яті</p>
-                <p className="text-xs text-gray-500 mt-1">У JDK 9–10 були окремі класи List0/List1/List2, Set0/Set1/Set2, Map0</p>
               </div>
             </div>
           </div>
