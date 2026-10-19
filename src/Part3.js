@@ -826,28 +826,29 @@ const CollectionsPresentation = () => {
           </div>
 
           <div className="bg-gray-50 p-5 rounded-lg border-l-4 border-gray-500">
-            <h4 className="font-bold text-gray-700 mb-3">🔧 Внутрішня імплементація</h4>
+            <h4 className="font-bold text-gray-700 mb-3">🔧 Внутрішня імплементація (JDK 11+)</h4>
             <div className="space-y-3 text-sm">
               <div className="bg-white p-3 rounded">
                 <p className="font-semibold text-blue-700 mb-1">List.of() →</p>
-                <p className="text-gray-700 font-mono text-xs">ImmutableCollections.List0/List1/List2/ListN</p>
-                <p className="text-gray-600 text-xs mt-1">Маленькі списки (0-2): окремі класи. Більші: ListN з масивом Object[]</p>
+                <p className="text-gray-700 font-mono text-xs">ImmutableCollections.List12 / ListN</p>
+                <p className="text-gray-600 text-xs mt-1">1–2 елементи: List12 (два поля, без масиву). 0 або 3+: ListN з масивом Object[]</p>
               </div>
-              
+          
               <div className="bg-white p-3 rounded">
                 <p className="font-semibold text-orange-700 mb-1">Set.of() →</p>
-                <p className="text-gray-700 font-mono text-xs">ImmutableCollections.Set0/Set1/Set2/SetN</p>
-                <p className="text-gray-600 text-xs mt-1">SetN використовує хеш-таблицю для швидкого пошуку O(1)</p>
+                <p className="text-gray-700 font-mono text-xs">ImmutableCollections.Set12 / SetN</p>
+                <p className="text-gray-600 text-xs mt-1">SetN використовує хеш-таблицю з відкритою адресацією: пошук O(1)</p>
               </div>
-              
+          
               <div className="bg-white p-3 rounded">
                 <p className="font-semibold text-purple-700 mb-1">Map.of() / Map.ofEntries() →</p>
-                <p className="text-gray-700 font-mono text-xs">ImmutableCollections.Map0/Map1/.../MapN</p>
-                <p className="text-gray-600 text-xs mt-1">Зберігає у плоскому масиві: [key1, val1, key2, val2, ...]</p>
+                <p className="text-gray-700 font-mono text-xs">ImmutableCollections.Map1 / MapN</p>
+                <p className="text-gray-600 text-xs mt-1">MapN зберігає у плоскому масиві: [key1, val1, key2, val2, ...]</p>
               </div>
-              
+          
               <div className="bg-blue-50 p-2 rounded mt-2">
-                <p className="text-xs text-gray-700"><strong>Оптимізація:</strong> Окремі класи для 0-2 елементів = мінімальне використання пам'яті</p>
+                <p className="text-xs text-gray-700"><strong>Оптимізація:</strong> 1–2 елементи зберігаються в полях без масиву, а порожня колекція є спільним синглтоном (List.of() == List.of()) = мінімальне використання пам'яті</p>
+                <p className="text-xs text-gray-500 mt-1">У JDK 9–10 були окремі класи List0/List1/List2, Set0/Set1/Set2, Map0</p>
               </div>
             </div>
           </div>
