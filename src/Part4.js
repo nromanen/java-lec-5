@@ -269,6 +269,7 @@ const FunctionalPresentation = () => {
             )
         },
         {
+       {
             title: "Method References",
             content: (
                 <div className="space-y-6">
@@ -276,32 +277,35 @@ const FunctionalPresentation = () => {
                         <h3 className="text-2xl font-bold">Method References</h3>
                         <p className="text-sm mt-1">Ще коротший синтаксис замість lambda</p>
                     </div>
-
+        
                     <div className="bg-cyan-50 p-5 rounded-lg border-l-4 border-cyan-500">
                         <h4 className="font-bold text-cyan-700 mb-3">4 типи Method References</h4>
                         <div className="grid grid-cols-2 gap-3">
                             <div className="bg-white p-3 rounded">
-                                <strong className="text-blue-600">1. Static method</strong>
+                                <strong className="text-blue-600">1. Статичний метод</strong>
                                 <div className="font-mono text-xs mt-1">ClassName::staticMethod</div>
                             </div>
                             <div className="bg-white p-3 rounded">
-                                <strong className="text-green-600">2. Instance method</strong>
+                                <strong className="text-green-600">2. Метод конкретного об'єкта</strong>
                                 <div className="font-mono text-xs mt-1">object::instanceMethod</div>
                             </div>
                             <div className="bg-white p-3 rounded">
-                                <strong className="text-purple-600">3. Instance method на параметрі</strong>
+                                <strong className="text-purple-600">3. Метод довільного об'єкта типу</strong>
                                 <div className="font-mono text-xs mt-1">ClassName::instanceMethod</div>
                             </div>
                             <div className="bg-white p-3 rounded">
-                                <strong className="text-orange-600">4. Constructor</strong>
+                                <strong className="text-orange-600">4. Конструктор</strong>
                                 <div className="font-mono text-xs mt-1">ClassName::new</div>
                             </div>
                         </div>
                     </div>
-
+        
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="bg-blue-50 p-5 rounded-lg">
-                            <h4 className="font-bold text-blue-700 mb-3">1. Static method reference</h4>
+                            <h4 className="font-bold text-blue-700 mb-1">1. Статичний метод</h4>
+                            <p className="text-xs text-gray-600 mb-3">
+                                Параметр lambda стає <strong>аргументом</strong> статичного методу
+                            </p>
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div className="text-red-600">{'// Lambda'}</div>
                                 <div>Function&lt;String, Integer&gt; parser = </div>
@@ -311,53 +315,73 @@ const FunctionalPresentation = () => {
                                 <div className="ml-4">Integer::parseInt;</div>
                             </div>
                         </div>
-
+        
                         <div className="bg-green-50 p-5 rounded-lg">
-                            <h4 className="font-bold text-green-700 mb-3">2. Instance method reference</h4>
+                            <h4 className="font-bold text-green-700 mb-1">2. Метод конкретного об'єкта</h4>
+                            <p className="text-xs text-gray-600 mb-3">
+                                Об'єкт відомий заздалегідь, параметр lambda стає <strong>аргументом</strong> методу
+                            </p>
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div className="text-red-600">{'// Lambda'}</div>
                                 <div>Consumer&lt;String&gt; printer = </div>
-                                <div className="ml-4">s -&gt; System.out.println(s);</div>
+                                <div className="ml-4">
+                                    s -&gt; <span className="bg-green-200 px-1 rounded">System.out</span>.println(<span className="bg-yellow-200 px-1 rounded">s</span>);
+                                </div>
                                 <div className="mt-2 text-green-600">{'// Method reference'}</div>
                                 <div>Consumer&lt;String&gt; printer = </div>
-                                <div className="ml-4">System.out::println;</div>
+                                <div className="ml-4">
+                                    <span className="bg-green-200 px-1 rounded">System.out</span>::println;
+                                </div>
                             </div>
                         </div>
-
+        
                         <div className="bg-purple-50 p-5 rounded-lg">
-                            <h4 className="font-bold text-purple-700 mb-3">3. Instance method на параметрі</h4>
+                            <h4 className="font-bold text-purple-700 mb-1">3. Метод довільного об'єкта типу</h4>
+                            <p className="text-xs text-gray-600 mb-3">
+                                Об'єкта ще немає, параметр lambda сам стає <strong>об'єктом</strong>, на якому викликається метод
+                            </p>
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div className="text-red-600">{'// Lambda'}</div>
                                 <div>Function&lt;String, Integer&gt; length = </div>
-                                <div className="ml-4">s -&gt; s.length();</div>
+                                <div className="ml-4">
+                                    s -&gt; <span className="bg-yellow-200 px-1 rounded">s</span>.length();
+                                </div>
                                 <div className="mt-2 text-green-600">{'// Method reference'}</div>
                                 <div>Function&lt;String, Integer&gt; length = </div>
-                                <div className="ml-4">String::length;</div>
+                                <div className="ml-4">
+                                    <span className="bg-purple-200 px-1 rounded">String</span>::length;
+                                </div>
                                 <div className="mt-3">Predicate&lt;String&gt; isEmpty = </div>
-                                <div className="ml-4">String::isEmpty;</div>
+                                <div className="ml-4">
+                                    <span className="bg-purple-200 px-1 rounded">String</span>::isEmpty;
+                                </div>
+                                <div className="text-gray-500 ml-4">{'// s -> s.isEmpty()'}</div>
                             </div>
                         </div>
-
+        
                         <div className="bg-orange-50 p-5 rounded-lg">
-                            <h4 className="font-bold text-orange-700 mb-3">4. Constructor reference</h4>
+                            <h4 className="font-bold text-orange-700 mb-1">4. Конструктор</h4>
+                            <p className="text-xs text-gray-600 mb-3">
+                                Параметри lambda стають <strong>аргументами</strong> конструктора
+                            </p>
                             <div className="bg-white p-3 rounded font-mono text-xs">
-                                <div className="text-blue-600">{'// Без параметрів - Supplier'}</div>
+                                <div className="text-blue-600">{'// No parameters: Supplier'}</div>
                                 <div className="text-red-600">{'// Lambda'}</div>
                                 <div>Supplier&lt;List&lt;String&gt;&gt; listSupplier = </div>
                                 <div className="ml-4">() -&gt; new ArrayList&lt;&gt;();</div>
                                 <div className="text-green-600">{'// Constructor reference'}</div>
                                 <div>Supplier&lt;List&lt;String&gt;&gt; listSupplier = </div>
                                 <div className="ml-4">ArrayList::new;</div>
-                                
-                                <div className="mt-3 text-blue-600">{'// 1 параметр - Function'}</div>
+        
+                                <div className="mt-3 text-blue-600">{'// One parameter: Function'}</div>
                                 <div className="text-red-600">{'// Lambda'}</div>
                                 <div>Function&lt;String, User&gt; userCreator = </div>
                                 <div className="ml-4">name -&gt; new User(name);</div>
                                 <div className="text-green-600">{'// Constructor reference'}</div>
                                 <div>Function&lt;String, User&gt; userCreator = </div>
                                 <div className="ml-4">User::new;</div>
-                                
-                                <div className="mt-3 text-blue-600">{'// 2 параметри - BiFunction'}</div>
+        
+                                <div className="mt-3 text-blue-600">{'// Two parameters: BiFunction'}</div>
                                 <div className="text-red-600">{'// Lambda'}</div>
                                 <div>BiFunction&lt;String, Integer, User&gt; creator = </div>
                                 <div className="ml-4">(name, age) -&gt; new User(name, age);</div>
@@ -367,16 +391,36 @@ const FunctionalPresentation = () => {
                             </div>
                         </div>
                     </div>
-
+        
+                    <div className="bg-gray-50 p-5 rounded-lg border-l-4 border-gray-400">
+                        <h4 className="font-bold text-gray-700 mb-3">Тип 2 чи тип 3? Один метод, два види посилання</h4>
+                        <div className="bg-white p-3 rounded font-mono text-xs space-y-3">
+                            <div>
+                                <div className="text-green-600">{'// 2. Object is fixed: one parameter'}</div>
+                                <div>Predicate&lt;String&gt; isAdmin = "admin"::equals;</div>
+                                <div className="text-gray-500 ml-4">{'// s -> "admin".equals(s)'}</div>
+                            </div>
+                            <div>
+                                <div className="text-purple-600">{'// 3. Object comes as the first parameter: two parameters'}</div>
+                                <div>BiPredicate&lt;String, String&gt; same = String::equals;</div>
+                                <div className="text-gray-500 ml-4">{'// (a, b) -> a.equals(b)'}</div>
+                            </div>
+                        </div>
+                        <p className="text-sm text-gray-700 mt-3">
+                            Дивимося, що стоїть ліворуч від <code className="font-mono">::</code>. Конкретний об'єкт (змінна, вираз) означає тип 2.
+                            Ім'я класу з нестатичним методом означає тип 3: перший параметр lambda стає об'єктом, на якому викликається метод.
+                        </p>
+                    </div>
+        
                     <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-400">
                         <p className="font-semibold text-gray-800 mb-2">💡 Коли використовувати Method Reference?</p>
                         <div className="text-sm text-gray-700">
-                            Якщо lambda просто викликає існуючий метод - використовуйте method reference. Це робить код коротшим та читабельнішим.
+                            Якщо lambda просто викликає існуючий метод, використовуйте method reference. Це робить код коротшим та читабельнішим.
                         </div>
                     </div>
                 </div>
             )
-        },        
+        },      
         {
             title: "Вбудовані Functional Interface",
             content: (
