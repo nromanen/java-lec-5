@@ -83,12 +83,22 @@ const IntegrationPresentation = () => {
                 <div className="ml-4">new User("Alice", 30),</div>
                 <div className="ml-4">new User("Bob", 20)</div>
                 <div>);</div>
-                <div className="mt-3 text-blue-600">{'// Сортування за віком'}</div>
-                <div>users.sort(Comparator.comparing(</div>
-                <div className="ml-4">User::getAge));</div>
-                <div className="mt-3 text-blue-600">{'// Сортування за іменем'}</div>
+          
+                <div className="mt-3 text-blue-600">{'// By name: lambda compares two users'}</div>
+                <div>users.sort((a, b) -&gt;</div>
+                <div className="ml-4">a.getName().compareTo(b.getName()));</div>
+          
+                <div className="mt-3 text-blue-600">{'// The same: comparing builds the comparator from a key'}</div>
                 <div>users.sort(Comparator.comparing(</div>
                 <div className="ml-4">User::getName));</div>
+          
+                <div className="mt-3 text-red-600">{'// users.sort(User::getName);'}</div>
+                <div className="text-red-600">{'// compile error: sort needs (a, b) -> int,'}</div>
+                <div className="text-red-600">{'// but getName is u -> String'}</div>
+          
+                <div className="mt-3 text-blue-600">{'// By age: comparingInt avoids boxing int'}</div>
+                <div>users.sort(Comparator.comparingInt(</div>
+                <div className="ml-4">User::getAge));</div>
               </div>
             </div>
 
