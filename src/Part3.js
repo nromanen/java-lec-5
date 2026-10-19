@@ -406,20 +406,26 @@ const CollectionsPresentation = () => {
                     <div>• get, put, remove: O(log n)</div>
                     <div><strong>Особливості:</strong></div>
                     <div>• Відсортовані ключі</div>
-                    <div>• НЕ дозволяє null-ключі</div>
-                    <div>• Реалізує NavigableMap</div>
+                    <div>• null-ключ заборонений при природному порядку (NullPointerException), null-значення дозволені</div>
+                    <div>• Реалізує NavigableMap: пошук найближчих ключів, діапазони, зворотний порядок</div>
                   </div>
                 </div>
                 <div className="bg-white p-3 rounded font-mono text-xs">
-                  <div>{"Map<Integer, String> map = new TreeMap<>();"}</div>
+                  <div>{"NavigableMap<Integer, String> map = new TreeMap<>();"}</div>
                   <div>map.put(3, "Three");</div>
                   <div>map.put(1, "One");</div>
                   <div>map.put(2, "Two");</div>
-                  <div className="mt-2 text-gray-500">{'// Відсортовано: 1=One, 2=Two, 3=Three'}</div>
+                  <div className="text-gray-500">{'// Sorted by key: {1=One, 2=Two, 3=Three}'}</div>
+            
+                  <div className="mt-3 text-blue-600">{'// NavigableMap methods'}</div>
+                  <div>map.firstEntry();   <span className="text-gray-500">{'// 1=One'}</span></div>
+                  <div>map.floorKey(5);    <span className="text-gray-500">{'// 3: largest key <= 5'}</span></div>
+                  <div>map.higherKey(3);   <span className="text-gray-500">{'// null: no greater key'}</span></div>
+                  <div>map.headMap(2, true); <span className="text-gray-500">{'// {1=One, 2=Two}'}</span></div>
+                  <div>map.descendingMap(); <span className="text-gray-500">{'// {3=Three, 2=Two, 1=One}'}</span></div>
                 </div>
               </div>
             </div>
-
             <div className="bg-blue-50 p-5 rounded-lg border-l-4 border-blue-500">
               <h4 className="font-bold text-blue-700 mb-3 text-xl">LinkedHashMap</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
