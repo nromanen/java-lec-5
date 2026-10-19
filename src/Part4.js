@@ -671,28 +671,38 @@ const FunctionalPresentation = () => {
                         </div>
                     </div>
         
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="bg-blue-50 p-5 rounded-lg">
-                            <h4 className="font-bold text-blue-700 mb-3">1. Відкладена ініціалізація</h4>
-                            <div className="bg-white p-3 rounded font-mono text-xs">
-                                <div className="text-blue-600">{'// The connection is created on first use'}</div>
-                                <div>class DatabaseConnection {'{'}</div>
-                                <div className="ml-4">private final Supplier&lt;Connection&gt; supplier;</div>
-                                <div className="ml-4">private Connection conn;</div>
-                                <div className="mt-2 ml-4">DatabaseConnection(Supplier&lt;Connection&gt; supplier) {'{'}</div>
-                                <div className="ml-8">this.supplier = supplier;</div>
-                                <div className="ml-8 text-gray-500">{'// Nothing is created yet'}</div>
-                                <div className="ml-4">{'}'}</div>
-                                <div className="mt-2 ml-4">public Connection getConnection() {'{'}</div>
-                                <div className="ml-8">if (conn == null) {'{'}</div>
-                                <div className="ml-12 text-green-600">{'// Created only here, once'}</div>
-                                <div className="ml-12">conn = supplier.get();</div>
-                                <div className="ml-8">{'}'}</div>
-                                <div className="ml-8">return conn;</div>
-                                <div className="ml-4">{'}'}</div>
-                                <div>{'}'}</div>
-                            </div>
+                    <div className="bg-blue-50 p-5 rounded-lg">
+                        <h4 className="font-bold text-blue-700 mb-1">1. Відкладена ініціалізація: Lazy&lt;T&gt;</h4>
+                        <p className="text-xs text-gray-600 mb-3">
+                            Lazy не знає, ЯК створити T, тому отримує це ззовні через Supplier.
+                            Сам відповідає лише за те, КОЛИ: при першому зверненні, один раз
+                        </p>
+                        <div className="bg-white p-3 rounded font-mono text-xs">
+                            <div className="text-blue-600">{'// Written once, works for any type'}</div>
+                            <div>class Lazy&lt;T&gt; {'{'}</div>
+                            <div className="ml-4">private final Supplier&lt;T&gt; supplier;</div>
+                            <div className="ml-4">private T value;</div>
+                            <div className="mt-2 ml-4">Lazy(Supplier&lt;T&gt; supplier) {'{'}</div>
+                            <div className="ml-8">this.supplier = supplier;</div>
+                            <div className="ml-8 text-gray-500">{'// Nothing is created yet'}</div>
+                            <div className="ml-4">{'}'}</div>
+                            <div className="mt-2 ml-4">T get() {'{'}</div>
+                            <div className="ml-8">if (value == null) {'{'}</div>
+                            <div className="ml-12 text-green-600">{'// Created only here, once'}</div>
+                            <div className="ml-12">value = supplier.get();</div>
+                            <div className="ml-8">{'}'}</div>
+                            <div className="ml-8">return value;</div>
+                            <div className="ml-4">{'}'}</div>
+                            <div>{'}'}</div>
+                    
+                            <div className="mt-3 text-blue-600">{'// Reused for different types'}</div>
+                            <div>Lazy&lt;Config&gt; config = new Lazy&lt;&gt;(() -&gt; loadConfig("app.yaml"));</div>
+                            <div>Lazy&lt;Report&gt; report = new Lazy&lt;&gt;(() -&gt; buildReport());</div>
+                    
+                            <div className="mt-3">config.get(); <span className="text-gray-500">{'// loads the config'}</span></div>
+                            <div>config.get(); <span className="text-gray-500">{'// returns the cached one'}</span></div>
                         </div>
+                    </div>
         
                         <div className="bg-purple-50 p-5 rounded-lg">
                             <h4 className="font-bold text-purple-700 mb-3">2. Optional з lazy default</h4>
