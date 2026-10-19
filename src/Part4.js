@@ -568,7 +568,7 @@ const FunctionalPresentation = () => {
                         <h3 className="text-2xl font-bold">Supplier&lt;T&gt;</h3>
                         <p className="text-sm mt-1">Постачає (створює) значення, нічого не приймає</p>
                     </div>
-
+        
                     <div className="bg-blue-50 p-5 rounded-lg border-l-4 border-blue-500">
                         <h4 className="font-bold text-blue-700 mb-3">Визначення</h4>
                         <div className="bg-white p-4 rounded font-mono text-sm">
@@ -578,55 +578,50 @@ const FunctionalPresentation = () => {
                             <div>{'}'}</div>
                         </div>
                     </div>
-
+        
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="bg-green-50 p-5 rounded-lg">
-                            <h4 className="font-bold text-green-700 mb-3">Базове використання</h4>
+                            <h4 className="font-bold text-green-700 mb-1">Базове використання</h4>
+                            <p className="text-xs text-gray-600 mb-3">
+                                Кожен виклик <code className="font-mono">get()</code> виконує lambda заново
+                            </p>
                             <div className="bg-white p-3 rounded font-mono text-xs">
-                                <div className="text-blue-600">{'// Генерація значень'}</div>
-                                <div>Supplier&lt;Double&gt; randomSupplier = </div>
-                                <div className="ml-4">() -&gt; Math.random();</div>
-                                <div>Double value = randomSupplier.get();</div>
-                                <div className="mt-3 text-blue-600">{'// Постачання об\'єктів'}</div>
-                                <div>Supplier&lt;String&gt; stringSupplier = </div>
-                                <div className="ml-4">() -&gt; "Hello World";</div>
-                                <div className="mt-3 text-blue-600">{'// Method reference'}</div>
+                                <div className="text-blue-600">{'// A new value on every call'}</div>
+                                <div>Supplier&lt;Double&gt; random = Math::random;</div>
+                                <div>random.get(); <span className="text-gray-500">{'// 0.42...'}</span></div>
+                                <div>random.get(); <span className="text-gray-500">{'// 0.87...'}</span></div>
+        
+                                <div className="mt-3 text-blue-600">{'// A new object on every call'}</div>
                                 <div>Supplier&lt;List&lt;String&gt;&gt; listSupplier = </div>
                                 <div className="ml-4">ArrayList::new;</div>
+                                <div>List&lt;String&gt; a = listSupplier.get();</div>
+                                <div>List&lt;String&gt; b = listSupplier.get();</div>
+                                <div className="text-gray-500">{'// a != b: two different lists'}</div>
                             </div>
                         </div>
-
+        
                         <div className="bg-purple-50 p-5 rounded-lg">
-                            <h4 className="font-bold text-purple-700 mb-3">Lazy обчислення</h4>
+                            <h4 className="font-bold text-purple-700 mb-1">Значення чи «рецепт» значення</h4>
+                            <p className="text-xs text-gray-600 mb-3">
+                                Змінна зберігає результат, Supplier зберігає спосіб його отримати
+                            </p>
                             <div className="bg-white p-3 rounded font-mono text-xs">
-                                <div className="text-blue-600">{'// Відкладені обчислення'}</div>
-                                <div>public String expensiveOperation() {'{'}</div>
-                                <div className="ml-4">System.out.println("Expensive!");</div>
-                                <div className="ml-4">return "Result";</div>
-                                <div>{'}'}</div>
-                                <div className="mt-2 text-blue-600">{'// Без Supplier - завжди'}</div>
-                                <div>logger.log(expensiveOperation());</div>
-                                <div className="mt-2 text-blue-600">{'// З Supplier - тільки якщо потрібно'}</div>
-                                <div>logger.log(() -&gt; expensiveOperation());</div>
+                                <div className="text-blue-600">{'// Computed once, right here'}</div>
+                                <div>LocalTime now = LocalTime.now();</div>
+                                <div className="mt-2 text-blue-600">{'// Computed on every get()'}</div>
+                                <div>Supplier&lt;LocalTime&gt; clock = LocalTime::now;</div>
+        
+                                <div className="mt-3 text-gray-500">{'// ... 2 seconds later'}</div>
+                                <div>now;         <span className="text-gray-500">{'// 10:00:00'}</span></div>
+                                <div>clock.get(); <span className="text-gray-500">{'// 10:00:02'}</span></div>
                             </div>
                         </div>
                     </div>
-
-                    <div className="bg-orange-50 p-5 rounded-lg">
-                        <h4 className="font-bold text-orange-700 mb-3">Практичні приклади</h4>
-                        <div className="bg-white p-4 rounded font-mono text-xs">
-                            <div className="text-blue-600">{'// Factory pattern'}</div>
-                            <div>class UserFactory {'{'}</div>
-                            <div className="ml-4">public static Supplier&lt;User&gt; adminSupplier = </div>
-                            <div className="ml-8">() -&gt; new User("admin", Role.ADMIN);</div>
-                            <div>{'}'}</div>
-                            <div className="mt-2">User admin = UserFactory.adminSupplier.get();</div>
-                        </div>
-                    </div>
-
+        
                     <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-400">
                         <p className="font-semibold text-gray-800">
-                            💡 Supplier - для створення/генерації значень без вхідних параметрів. Ідеально для factory методів.
+                            💡 Supplier описує, ЯК отримати значення, а КОЛИ його отримати, вирішує той, хто викликає{' '}
+                            <code className="font-mono">get()</code>. На цьому побудовані ліниві обчислення.
                         </p>
                     </div>
                 </div>
@@ -640,32 +635,57 @@ const FunctionalPresentation = () => {
                         <h3 className="text-2xl font-bold">Supplier&lt;T&gt; для Lazy Evaluation</h3>
                         <p className="text-sm mt-1">Відкладене виконання до моменту, коли дійсно потрібно!</p>
                     </div>
-
+        
                     <div className="bg-teal-50 p-5 rounded-lg border-l-4 border-teal-500">
                         <h4 className="font-bold text-teal-700 mb-3">Що таке Lazy обчислення?</h4>
+                        <div className="bg-white p-3 rounded font-mono text-xs mb-3">
+                            <div className="text-blue-600">{'// Logger with two overloads; logging is disabled'}</div>
+                            <div>void log(String msg) {'{'}</div>
+                            <div className="ml-4">if (enabled) System.out.println(msg);</div>
+                            <div>{'}'}</div>
+                            <div>void log(Supplier&lt;String&gt; msg) {'{'}</div>
+                            <div className="ml-4">if (enabled) System.out.println(<span className="bg-yellow-200 px-1 rounded">msg.get()</span>);</div>
+                            <div>{'}'}</div>
+                        </div>
                         <div className="grid grid-cols-2 gap-3">
                             <div className="bg-red-50 p-3 rounded border border-red-300">
                                 <strong className="text-red-600">❌ Eager (жадібне)</strong>
-                                <div className="text-sm text-gray-700 mt-1">Виконується ЗАВЖДИ одразу</div>
+                                <div className="bg-white p-2 rounded font-mono text-xs mt-2">
+                                    logger.log(expensiveOperation());
+                                </div>
+                                <div className="text-sm text-gray-700 mt-2">
+                                    Аргумент обчислюється ДО виклику <code className="font-mono">log()</code>,
+                                    тому дорога операція виконується завжди, навіть коли логування вимкнене
+                                </div>
                             </div>
                             <div className="bg-green-50 p-3 rounded border border-green-300">
                                 <strong className="text-green-600">✓ Lazy (ледаче)</strong>
-                                <div className="text-sm text-gray-700 mt-1">Виконується ТІЛЬКИ коли потрібно</div>
+                                <div className="bg-white p-2 rounded font-mono text-xs mt-2">
+                                    logger.log(() -&gt; expensiveOperation());
+                                </div>
+                                <div className="text-sm text-gray-700 mt-2">
+                                    У <code className="font-mono">log()</code> передається лише lambda,
+                                    а <code className="font-mono">get()</code> викликається всередині, тільки якщо результат потрібен
+                                </div>
                             </div>
                         </div>
                     </div>
-
+        
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="bg-blue-50 p-5 rounded-lg">
                             <h4 className="font-bold text-blue-700 mb-3">1. Відкладена ініціалізація</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
-                                <div className="text-blue-600">{'// З\'єднання створюється пізніше'}</div>
+                                <div className="text-blue-600">{'// The connection is created on first use'}</div>
                                 <div>class DatabaseConnection {'{'}</div>
+                                <div className="ml-4">private final Supplier&lt;Connection&gt; supplier;</div>
                                 <div className="ml-4">private Connection conn;</div>
-                                <div className="ml-4">private Supplier&lt;Connection&gt; supplier;</div>
+                                <div className="mt-2 ml-4">DatabaseConnection(Supplier&lt;Connection&gt; supplier) {'{'}</div>
+                                <div className="ml-8">this.supplier = supplier;</div>
+                                <div className="ml-8 text-gray-500">{'// Nothing is created yet'}</div>
+                                <div className="ml-4">{'}'}</div>
                                 <div className="mt-2 ml-4">public Connection getConnection() {'{'}</div>
                                 <div className="ml-8">if (conn == null) {'{'}</div>
-                                <div className="ml-12 text-green-600">{'// Тільки тут створюється!'}</div>
+                                <div className="ml-12 text-green-600">{'// Created only here, once'}</div>
                                 <div className="ml-12">conn = supplier.get();</div>
                                 <div className="ml-8">{'}'}</div>
                                 <div className="ml-8">return conn;</div>
@@ -673,40 +693,39 @@ const FunctionalPresentation = () => {
                                 <div>{'}'}</div>
                             </div>
                         </div>
-
+        
                         <div className="bg-purple-50 p-5 rounded-lg">
                             <h4 className="font-bold text-purple-700 mb-3">2. Optional з lazy default</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
-                                <div className="text-red-600">{'// ❌ Завжди створює User'}</div>
+                                <div className="text-red-600">{'// ❌ Always creates a User'}</div>
                                 <div>User user = repo.findById(id)</div>
                                 <div className="ml-4">.orElse(createDefaultUser());</div>
-                                <div className="mt-3 text-green-600">{'// ✓ Створює тільки якщо потрібно'}</div>
+                                <div className="mt-3 text-green-600">{'// ✓ Creates it only if needed'}</div>
                                 <div>User user = repo.findById(id)</div>
-                                <div className="ml-4">.orElseGet(() -&gt; </div>
-                                <div className="ml-8">createDefaultUser());</div>
-                                <div className="mt-2 text-gray-500">{'// Якщо Optional не порожній,'}</div>
-                                <div className="text-gray-500">{'// createDefaultUser() НЕ викличеться!'}</div>
+                                <div className="ml-4">.orElseGet(() -&gt; createDefaultUser());</div>
+                                <div className="mt-2 text-gray-500">{'// If the Optional is not empty,'}</div>
+                                <div className="text-gray-500">{'// createDefaultUser() is NOT called'}</div>
                             </div>
                         </div>
-
+        
                         <div className="bg-orange-50 p-5 rounded-lg">
                             <h4 className="font-bold text-orange-700 mb-3">3. UI з можливістю скасування</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
                                 <div>class ReportGenerator {'{'}</div>
-                                <div className="ml-4">void showReport(</div>
-                                <div className="ml-8">Supplier&lt;String&gt; reportSupplier) {'{'}</div>
-                                <div className="ml-4 mt-2">showLoadingSpinner();</div>
-                                <div className="ml-4 mt-2">if (userClickedCancel()) {'{'}</div>
-                                <div className="ml-8 text-green-600">{'// Звіт НЕ генерується!'}</div>
-                                <div className="ml-8">return;</div>
+                                <div className="ml-4">void showReport(Supplier&lt;String&gt; reportSupplier) {'{'}</div>
+                                <div className="ml-8">showLoadingSpinner();</div>
+                                <div className="ml-8 mt-2">if (userClickedCancel()) {'{'}</div>
+                                <div className="ml-12 text-green-600">{'// The report is NOT generated'}</div>
+                                <div className="ml-12">return;</div>
+                                <div className="ml-8">{'}'}</div>
+                                <div className="ml-8 mt-2 text-green-600">{'// Generated only here'}</div>
+                                <div className="ml-8">String report = reportSupplier.get();</div>
+                                <div className="ml-8">displayReport(report);</div>
                                 <div className="ml-4">{'}'}</div>
-                                <div className="ml-4 mt-2 text-green-600">{'// Тільки тут генерується'}</div>
-                                <div className="ml-4">String report = reportSupplier.get();</div>
-                                <div className="ml-4">displayReport(report);</div>
                                 <div>{'}'}</div>
                             </div>
                         </div>
-
+        
                         <div className="bg-green-50 p-5 rounded-lg">
                             <h4 className="font-bold text-green-700 mb-3">4. Фабрика об'єктів</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
@@ -714,39 +733,45 @@ const FunctionalPresentation = () => {
                                 <div className="ml-4">Map&lt;String, Supplier&lt;GameObject&gt;&gt;</div>
                                 <div className="ml-8">creators = new HashMap&lt;&gt;();</div>
                                 <div className="mt-2 ml-4">public GameObjectFactory() {'{'}</div>
-                                <div className="ml-8 text-gray-500">{'// Реєструємо, НЕ створюємо'}</div>
-                                <div className="ml-8">creators.put("enemy", </div>
-                                <div className="ml-12">() -&gt; new Enemy());</div>
-                                <div className="ml-8">creators.put("coin", </div>
-                                <div className="ml-12">() -&gt; new Coin());</div>
+                                <div className="ml-8 text-gray-500">{'// Register, do NOT create'}</div>
+                                <div className="ml-8">creators.put("enemy", () -&gt; new Enemy());</div>
+                                <div className="ml-8">creators.put("coin", () -&gt; new Coin());</div>
                                 <div className="ml-4">{'}'}</div>
                                 <div className="mt-2 ml-4">GameObject create(String type) {'{'}</div>
-                                <div className="ml-8 text-green-600">{'// Створюється тільки тут!'}</div>
+                                <div className="ml-8 text-green-600">{'// Created only here'}</div>
                                 <div className="ml-8">return creators.get(type).get();</div>
                                 <div className="ml-4">{'}'}</div>
                                 <div>{'}'}</div>
                             </div>
                         </div>
                     </div>
-
+        
                     <div className="bg-indigo-50 p-5 rounded-lg">
-                        <h4 className="font-bold text-indigo-700 mb-3">5. Stream з нескінченними послідовностями</h4>
+                        <h4 className="font-bold text-indigo-700 mb-1">5. Генератор зі станом</h4>
+                        <p className="text-xs text-gray-600 mb-3">
+                            Кожне наступне число обчислюється лише тоді, коли його просять через <code className="font-mono">get()</code>
+                        </p>
                         <div className="bg-white p-4 rounded font-mono text-xs">
-                            <div className="text-blue-600">{'// Генератор Фібоначчі - без Supplier неможливо!'}</div>
-                            <div>Stream&lt;Integer&gt; fibonacci = Stream.generate(new Supplier&lt;Integer&gt;() {'{'}</div>
+                            <div className="text-blue-600">{'// A Supplier with state needs an anonymous class: a lambda cannot have fields'}</div>
+                            <div>Supplier&lt;Integer&gt; fibonacci = new Supplier&lt;Integer&gt;() {'{'}</div>
                             <div className="ml-4">private int prev = 0, current = 1;</div>
+                            <div className="mt-2 ml-4">@Override</div>
                             <div className="ml-4">public Integer get() {'{'}</div>
+                            <div className="ml-8">int result = prev;</div>
                             <div className="ml-8">int next = prev + current;</div>
                             <div className="ml-8">prev = current;</div>
                             <div className="ml-8">current = next;</div>
-                            <div className="ml-8">return prev;</div>
+                            <div className="ml-8">return result;</div>
                             <div className="ml-4">{'}'}</div>
-                            <div>{'}).'}</div>
-                            <div className="mt-2 text-gray-500">{'// Числа генеруються ТІЛЬКИ коли їх беруть'}</div>
-                            <div>fibonacci.limit(10).forEach(System.out::println);</div>
+                            <div>{'};'}</div>
+                            <div className="mt-2 text-gray-500">{'// Numbers are generated one by one, on demand'}</div>
+                            <div>for (int i = 0; i &lt; 10; i++) {'{'}</div>
+                            <div className="ml-4">System.out.println(fibonacci.get());</div>
+                            <div>{'}'}</div>
+                            <div className="text-gray-500">{'// 0 1 1 2 3 5 8 13 21 34'}</div>
                         </div>
                     </div>
-
+        
                     <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-400">
                         <h4 className="font-bold text-yellow-700 mb-2">💡 Коли використовувати Lazy?</h4>
                         <ul className="space-y-1 text-sm text-gray-700">
