@@ -544,61 +544,68 @@ const IntegrationPresentation = () => {
             </div>
           </div>
     
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-blue-50 p-5 rounded-lg">
               <h4 className="font-bold text-blue-700 mb-3">Приклад 3: Validator</h4>
               <div className="bg-white p-3 rounded font-mono text-xs">
                 <div>public class Validator&lt;T&gt; &#123;</div>
-                <div className="ml-4">private List&lt;Predicate&lt;T&gt;&gt; rules = </div>
+          
+                <div className="ml-4 text-blue-600">{'// A check plus the message shown when it fails'}</div>
+                <div className="ml-4">private record Rule&lt;V&gt;(</div>
+                <div className="ml-8">Predicate&lt;V&gt; check, String message) &#123;&#125;</div>
+          
+                <div className="mt-2 ml-4">private final List&lt;Rule&lt;T&gt;&gt; rules =</div>
                 <div className="ml-8">new ArrayList&lt;&gt;();</div>
-                
-                <div className="mt-2 ml-4 text-blue-600">{'// Додати правило'}</div>
-                <div className="ml-4">public Validator&lt;T&gt; addRule(</div>
-                <div className="ml-8">Predicate&lt;T&gt; rule) &#123;</div>
-                <div className="ml-12">rules.add(rule);</div>
-                <div className="ml-12">return this;</div>
+          
+                <div className="mt-2 ml-4">public Validator&lt;T&gt; addRule(</div>
+                <div className="ml-8">Predicate&lt;T&gt; check, String message) &#123;</div>
+                <div className="ml-8">rules.add(new Rule&lt;&gt;(check, message));</div>
+                <div className="ml-8">return this;</div>
                 <div className="ml-4">&#125;</div>
-                
-                <div className="mt-2 ml-4 text-blue-600">{'// Валідація'}</div>
-                <div className="ml-4">public boolean validate(T item) &#123;</div>
-                <div className="ml-8">for (Predicate&lt;T&gt; rule : rules) &#123;</div>
-                <div className="ml-12">if (!rule.test(item)) &#123;</div>
-                <div className="ml-16">return false;</div>
+          
+                <div className="mt-2 ml-4 text-blue-600">{'// Messages of all failed rules; empty = valid'}</div>
+                <div className="ml-4">public List&lt;String&gt; validate(T item) &#123;</div>
+                <div className="ml-8">List&lt;String&gt; errors = new ArrayList&lt;&gt;();</div>
+                <div className="ml-8">for (Rule&lt;T&gt; rule : rules) &#123;</div>
+                <div className="ml-12">if (!rule.check().test(item)) &#123;</div>
+                <div className="ml-16">errors.add(rule.message());</div>
                 <div className="ml-12">&#125;</div>
                 <div className="ml-8">&#125;</div>
-                <div className="ml-8">return true;</div>
+                <div className="ml-8">return errors;</div>
                 <div className="ml-4">&#125;</div>
-                
-                <div className="mt-2 ml-4 text-gray-400">{'// Версія з Stream API:'}</div>
-                <div className="ml-4 text-gray-400">{'// return rules.stream()'}</div>
-                <div className="ml-4 text-gray-400">{'//.allMatch(rule -> rule.test(item));'}</div>
+          
+                <div className="mt-2 ml-4">public boolean isValid(T item) &#123;</div>
+                <div className="ml-8">return validate(item).isEmpty();</div>
+                <div className="ml-4">&#125;</div>
                 <div>&#125;</div>
               </div>
             </div>
-    
+          
             <div className="bg-purple-50 p-5 rounded-lg">
               <h4 className="font-bold text-purple-700 mb-3">Використання Validator</h4>
               <div className="bg-white p-3 rounded font-mono text-xs">
-                <div>Validator&lt;User&gt; userValidator = </div>
-                <div className="ml-4">new Validator&lt;&gt;()</div>
-                <div className="ml-8">.addRule(u -&gt; u.getAge() &gt;= 18)</div>
-                <div className="ml-8">.addRule(u -&gt; u.getEmail() != null)</div>
-                <div className="ml-8">.addRule(u -&gt; </div>
-                <div className="ml-12">u.getName().length() &gt; 2);</div>
-                
-                <div className="mt-3">User user = new User("Alice", 25, </div>
+                <div>Validator&lt;User&gt; userValidator =</div>
+                <div className="ml-4">new Validator&lt;User&gt;()</div>
+                <div className="ml-4 text-gray-500">{'// explicit <User>: <> would infer Object here'}</div>
+                <div className="ml-8">.addRule(u -&gt; u.getAge() &gt;= 18,</div>
+                <div className="ml-12">"Вік має бути не менше 18")</div>
+                <div className="ml-8">.addRule(u -&gt; u.getEmail() != null,</div>
+                <div className="ml-12">"Email обов'язковий")</div>
+                <div className="ml-8">.addRule(u -&gt; u.getName().length() &gt; 2,</div>
+                <div className="ml-12">"Ім'я має бути довше 2 символів");</div>
+          
+                <div className="mt-3">User user = new User("Alice", 25,</div>
                 <div className="ml-4">"alice@example.com");</div>
-                
-                <div className="mt-2">boolean isValid = </div>
-                <div className="ml-4">userValidator.validate(user);</div>
-                <div>System.out.println(isValid);</div>
+                <div>System.out.println(userValidator.isValid(user));</div>
                 <div className="text-gray-500">{'// true'}</div>
-                
-                <div className="mt-3">User youngUser = </div>
+                <div>System.out.println(userValidator.validate(user));</div>
+                <div className="text-gray-500">{'// []'}</div>
+          
+                <div className="mt-3">User youngUser =</div>
                 <div className="ml-4">new User("Bob", 16, "bob@test.com");</div>
                 <div>System.out.println(</div>
                 <div className="ml-4">userValidator.validate(youngUser));</div>
-                <div className="text-gray-500">{'// false - вік < 18'}</div>
+                <div className="text-gray-500">{'// [Вік має бути не менше 18]'}</div>
               </div>
             </div>
           </div>
