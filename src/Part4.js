@@ -97,7 +97,7 @@ const FunctionalPresentation = () => {
                     <div className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white p-4 rounded-lg">
                         <h3 className="text-2xl font-bold">Lambda: (параметри) -&gt; тіло</h3>
                     </div>
-        
+
                     <div className="bg-purple-50 p-5 rounded-lg border-l-4 border-purple-500">
                         <h4 className="font-bold text-purple-700 mb-3">Що таке lambda?</h4>
                         <p className="text-gray-700 mb-3">
@@ -162,34 +162,34 @@ const FunctionalPresentation = () => {
                             </div>
                         </div>
                     </div>
-        
+
                     <div className="bg-blue-50 p-5 rounded-lg">
                         <h4 className="font-bold text-blue-700 mb-3">Базовий синтаксис</h4>
                         <div className="bg-white p-4 rounded text-sm space-y-2">
                             <div className="text-blue-600">{'// Без параметрів'}</div>
                             <div className="font-mono">() -&gt; System.out.println("Hello")</div>
-        
+
                             <div className="mt-3 text-blue-600">{'// Один параметр (дужки можна опустити)'}</div>
                             <div className="font-mono">x -&gt; x * x</div>
-        
+
                             <div className="mt-3 text-blue-600">{'// Кілька параметрів - один вираз'}</div>
                             <div className="font-mono">(x, y) -&gt; x + y</div>
-        
+
                             <div className="mt-3 text-blue-600">{'// Кілька параметрів - один вираз з return'}</div>
                             <div className="font-mono">(x, y) -&gt; {'{ return x + y; }'}</div>
-        
+
                             <div className="mt-3 text-blue-600">{'// Блок коду з фігурними дужками'}</div>
                             <div className="font-mono">(x, y) -&gt; {'{'}</div>
                             <div className="font-mono ml-4">int result = x + y;</div>
                             <div className="font-mono ml-4">System.out.println("Результат: " + result);</div>
                             <div className="font-mono ml-4">return result;</div>
                             <div className="font-mono">{'}'}</div>
-        
+
                             <div className="mt-3 text-blue-600">{'// Типи параметрів можна вказати явно (рідко потрібно)'}</div>
                             <div className="font-mono">(int x, int y) -&gt; x + y</div>
                         </div>
                     </div>
-        
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="bg-orange-50 p-5 rounded-lg border-l-4 border-orange-500">
                             <h4 className="font-bold text-orange-700 mb-3">До Lambda (Java 7)</h4>
@@ -206,7 +206,7 @@ const FunctionalPresentation = () => {
                                 <div>{'});'}</div>
                             </div>
                         </div>
-        
+
                         <div className="bg-green-50 p-5 rounded-lg border-l-4 border-green-500">
                             <h4 className="font-bold text-green-700 mb-3">З Lambda (Java 8+)</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
@@ -220,24 +220,24 @@ const FunctionalPresentation = () => {
                             </div>
                         </div>
                     </div>
-        
+
                     <div className="bg-purple-50 p-5 rounded-lg">
                         <h4 className="font-bold text-purple-700 mb-3">Приклади використання</h4>
                         <div className="bg-white p-4 rounded font-mono text-xs space-y-2">
                             <div className="text-blue-600">{'// Comparator'}</div>
                             <div>names.sort((a, b) -&gt; a.compareTo(b));</div>
-        
+
                             <div className="mt-3 text-blue-600">{'// Runnable'}</div>
                             <div>new Thread(() -&gt; System.out.println("Hello")).start();</div>
-        
+
                             <div className="mt-3 text-blue-600">{'// Predicate'}</div>
                             <div>list.removeIf(s -&gt; s.isBlank());</div>
-        
+
                             <div className="mt-3 text-blue-600">{'// Власний функціональний інтерфейс'}</div>
                             <div>Calculator add = (a, b) -&gt; a + b;</div>
                         </div>
                     </div>
-        
+
                     <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-400">
                         <h4 className="font-bold text-yellow-700 mb-3">⚠️ Lambda та змінні: final або effectively final</h4>
                         <div className="text-sm text-gray-700 mb-2">
@@ -276,7 +276,7 @@ const FunctionalPresentation = () => {
                         <h3 className="text-2xl font-bold">Method References</h3>
                         <p className="text-sm mt-1">Ще коротший синтаксис замість lambda</p>
                     </div>
-        
+
                     <div className="bg-cyan-50 p-5 rounded-lg border-l-4 border-cyan-500">
                         <h4 className="font-bold text-cyan-700 mb-3">4 типи Method References</h4>
                         <div className="grid grid-cols-2 gap-3">
@@ -298,7 +298,7 @@ const FunctionalPresentation = () => {
                             </div>
                         </div>
                     </div>
-        
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="bg-blue-50 p-5 rounded-lg">
                             <h4 className="font-bold text-blue-700 mb-1">1. Статичний метод</h4>
@@ -314,7 +314,7 @@ const FunctionalPresentation = () => {
                                 <div className="ml-4">Integer::parseInt;</div>
                             </div>
                         </div>
-        
+
                         <div className="bg-green-50 p-5 rounded-lg">
                             <h4 className="font-bold text-green-700 mb-1">2. Метод конкретного об'єкта</h4>
                             <p className="text-xs text-gray-600 mb-3">
@@ -333,7 +333,7 @@ const FunctionalPresentation = () => {
                                 </div>
                             </div>
                         </div>
-        
+
                         <div className="bg-purple-50 p-5 rounded-lg">
                             <h4 className="font-bold text-purple-700 mb-1">3. Метод довільного об'єкта типу</h4>
                             <p className="text-xs text-gray-600 mb-3">
@@ -357,7 +357,7 @@ const FunctionalPresentation = () => {
                                 <div className="text-gray-500 ml-4">{'// s -> s.isEmpty()'}</div>
                             </div>
                         </div>
-        
+
                         <div className="bg-orange-50 p-5 rounded-lg">
                             <h4 className="font-bold text-orange-700 mb-1">4. Конструктор</h4>
                             <p className="text-xs text-gray-600 mb-3">
@@ -371,7 +371,7 @@ const FunctionalPresentation = () => {
                                 <div className="text-green-600">{'// Constructor reference'}</div>
                                 <div>Supplier&lt;List&lt;String&gt;&gt; listSupplier = </div>
                                 <div className="ml-4">ArrayList::new;</div>
-        
+
                                 <div className="mt-3 text-blue-600">{'// One parameter: Function'}</div>
                                 <div className="text-red-600">{'// Lambda'}</div>
                                 <div>Function&lt;String, User&gt; userCreator = </div>
@@ -379,7 +379,7 @@ const FunctionalPresentation = () => {
                                 <div className="text-green-600">{'// Constructor reference'}</div>
                                 <div>Function&lt;String, User&gt; userCreator = </div>
                                 <div className="ml-4">User::new;</div>
-        
+
                                 <div className="mt-3 text-blue-600">{'// Two parameters: BiFunction'}</div>
                                 <div className="text-red-600">{'// Lambda'}</div>
                                 <div>BiFunction&lt;String, Integer, User&gt; creator = </div>
@@ -390,7 +390,7 @@ const FunctionalPresentation = () => {
                             </div>
                         </div>
                     </div>
-        
+
                     <div className="bg-gray-50 p-5 rounded-lg border-l-4 border-gray-400">
                         <h4 className="font-bold text-gray-700 mb-3">Тип 2 чи тип 3? Один метод, два види посилання</h4>
                         <div className="bg-white p-3 rounded font-mono text-xs space-y-3">
@@ -410,7 +410,7 @@ const FunctionalPresentation = () => {
                             Ім'я класу з нестатичним методом означає тип 3: перший параметр lambda стає об'єктом, на якому викликається метод.
                         </p>
                     </div>
-        
+
                     <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-400">
                         <p className="font-semibold text-gray-800 mb-2">💡 Коли використовувати Method Reference?</p>
                         <div className="text-sm text-gray-700">
@@ -419,7 +419,7 @@ const FunctionalPresentation = () => {
                     </div>
                 </div>
             )
-        },      
+        },
         {
             title: "Вбудовані Functional Interface",
             content: (
@@ -568,7 +568,7 @@ const FunctionalPresentation = () => {
                         <h3 className="text-2xl font-bold">Supplier&lt;T&gt;</h3>
                         <p className="text-sm mt-1">Постачає (створює) значення, нічого не приймає</p>
                     </div>
-        
+
                     <div className="bg-blue-50 p-5 rounded-lg border-l-4 border-blue-500">
                         <h4 className="font-bold text-blue-700 mb-3">Визначення</h4>
                         <div className="bg-white p-4 rounded font-mono text-sm">
@@ -578,7 +578,7 @@ const FunctionalPresentation = () => {
                             <div>{'}'}</div>
                         </div>
                     </div>
-        
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="bg-green-50 p-5 rounded-lg">
                             <h4 className="font-bold text-green-700 mb-1">Базове використання</h4>
@@ -590,7 +590,7 @@ const FunctionalPresentation = () => {
                                 <div>Supplier&lt;Double&gt; random = Math::random;</div>
                                 <div>random.get(); <span className="text-gray-500">{'// 0.42...'}</span></div>
                                 <div>random.get(); <span className="text-gray-500">{'// 0.87...'}</span></div>
-        
+
                                 <div className="mt-3 text-blue-600">{'// A new object on every call'}</div>
                                 <div>Supplier&lt;List&lt;String&gt;&gt; listSupplier = </div>
                                 <div className="ml-4">ArrayList::new;</div>
@@ -599,7 +599,7 @@ const FunctionalPresentation = () => {
                                 <div className="text-gray-500">{'// a != b: two different lists'}</div>
                             </div>
                         </div>
-        
+
                         <div className="bg-purple-50 p-5 rounded-lg">
                             <h4 className="font-bold text-purple-700 mb-1">Значення чи «рецепт» значення</h4>
                             <p className="text-xs text-gray-600 mb-3">
@@ -610,14 +610,14 @@ const FunctionalPresentation = () => {
                                 <div>LocalTime now = LocalTime.now();</div>
                                 <div className="mt-2 text-blue-600">{'// Computed on every get()'}</div>
                                 <div>Supplier&lt;LocalTime&gt; clock = LocalTime::now;</div>
-        
+
                                 <div className="mt-3 text-gray-500">{'// ... 2 seconds later'}</div>
-                                <div>now;         <span className="text-gray-500">{'// 10:00:00'}</span></div>
+                                <div>now; <span className="text-gray-500">{'// 10:00:00'}</span></div>
                                 <div>clock.get(); <span className="text-gray-500">{'// 10:00:02'}</span></div>
                             </div>
                         </div>
                     </div>
-        
+
                     <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-400">
                         <p className="font-semibold text-gray-800">
                             💡 Supplier описує, ЯК отримати значення, а КОЛИ його отримати, вирішує той, хто викликає{' '}
@@ -635,9 +635,15 @@ const FunctionalPresentation = () => {
                         <h3 className="text-2xl font-bold">Supplier&lt;T&gt; для Lazy Evaluation</h3>
                         <p className="text-sm mt-1">Відкладене виконання до моменту, коли дійсно потрібно!</p>
                     </div>
-        
+
                     <div className="bg-teal-50 p-5 rounded-lg border-l-4 border-teal-500">
                         <h4 className="font-bold text-teal-700 mb-3">Що таке Lazy обчислення?</h4>
+                        <p className="text-gray-700 mb-3">
+                            Правило Java: перед викликом методу <strong>спочатку обчислюються всі аргументи</strong>,
+                            і лише потім виконується тіло методу. Тому метод отримує вже готове значення і не може
+                            відмовитися від його обчислення. Supplier обходить це правило: аргументом стає lambda,
+                            а саме обчислення переїжджає всередину методу.
+                        </p>
                         <div className="bg-white p-3 rounded font-mono text-xs mb-3">
                             <div className="text-blue-600">{'// Logger with two overloads; logging is disabled'}</div>
                             <div>void log(String msg) {'{'}</div>
@@ -670,7 +676,7 @@ const FunctionalPresentation = () => {
                             </div>
                         </div>
                     </div>
-        
+
                     <div className="bg-blue-50 p-5 rounded-lg">
                         <h4 className="font-bold text-blue-700 mb-1">1. Відкладена ініціалізація: Lazy&lt;T&gt;</h4>
                         <p className="text-xs text-gray-600 mb-3">
@@ -694,16 +700,17 @@ const FunctionalPresentation = () => {
                             <div className="ml-8">return value;</div>
                             <div className="ml-4">{'}'}</div>
                             <div>{'}'}</div>
-                    
+
                             <div className="mt-3 text-blue-600">{'// Reused for different types'}</div>
                             <div>Lazy&lt;Config&gt; config = new Lazy&lt;&gt;(() -&gt; loadConfig("app.yaml"));</div>
                             <div>Lazy&lt;Report&gt; report = new Lazy&lt;&gt;(() -&gt; buildReport());</div>
-                    
+
                             <div className="mt-3">config.get(); <span className="text-gray-500">{'// loads the config'}</span></div>
                             <div>config.get(); <span className="text-gray-500">{'// returns the cached one'}</span></div>
                         </div>
                     </div>
-        
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="bg-purple-50 p-5 rounded-lg">
                             <h4 className="font-bold text-purple-700 mb-3">2. Optional з lazy default</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
@@ -717,7 +724,7 @@ const FunctionalPresentation = () => {
                                 <div className="text-gray-500">{'// createDefaultUser() is NOT called'}</div>
                             </div>
                         </div>
-        
+
                         <div className="bg-orange-50 p-5 rounded-lg">
                             <h4 className="font-bold text-orange-700 mb-3">3. UI з можливістю скасування</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
@@ -735,7 +742,7 @@ const FunctionalPresentation = () => {
                                 <div>{'}'}</div>
                             </div>
                         </div>
-        
+
                         <div className="bg-green-50 p-5 rounded-lg">
                             <h4 className="font-bold text-green-700 mb-3">4. Фабрика об'єктів</h4>
                             <div className="bg-white p-3 rounded font-mono text-xs">
@@ -755,7 +762,7 @@ const FunctionalPresentation = () => {
                             </div>
                         </div>
                     </div>
-        
+
                     <div className="bg-indigo-50 p-5 rounded-lg">
                         <h4 className="font-bold text-indigo-700 mb-1">5. Генератор зі станом</h4>
                         <p className="text-xs text-gray-600 mb-3">
@@ -781,14 +788,14 @@ const FunctionalPresentation = () => {
                             <div className="text-gray-500">{'// 0 1 1 2 3 5 8 13 21 34'}</div>
                         </div>
                     </div>
-        
+
                     <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-400">
                         <h4 className="font-bold text-yellow-700 mb-2">💡 Коли використовувати Lazy?</h4>
                         <ul className="space-y-1 text-sm text-gray-700">
                             <li>✓ Операція дорога (повільна, багато пам'яті)</li>
                             <li>✓ Може не знадобитися (умовне виконання)</li>
                             <li>✓ Відкладена ініціалізація ресурсів</li>
-                            <li>✓ Нескінченні послідовності в Stream</li>
+                            <li>✓ Значення потрібні по одному, на запит (генератори)</li>
                             <li>✓ Економія ресурсів та продуктивності!</li>
                         </ul>
                     </div>
@@ -876,8 +883,8 @@ const FunctionalPresentation = () => {
                         </div>
                         <div className="mt-3 p-3 bg-yellow-50 rounded border border-yellow-300">
                             <p className="text-sm text-gray-700">
-                                <strong>andThen</strong> читається природно (зліва направо), 
-                                <strong> compose</strong> - математична нотація (справа наліво). 
+                                <strong>andThen</strong> читається природно (зліва направо),
+                                <strong> compose</strong> - математична нотація (справа наліво).
                                 На практиці <strong>andThen</strong> використовується частіше!
                             </p>
                         </div>
@@ -1093,21 +1100,21 @@ const FunctionalPresentation = () => {
                             <div>List&lt;User&gt; users = getUserList();</div>
                             <div className="mt-2 text-blue-600">{'// Сортування за датою народження'}</div>
                             <div>users.sort(Comparator.comparing(User::getDateOfBirth));</div>
-                            
+
                             <div className="mt-3 text-blue-600">{'// Зворотне сортування (найстарші спочатку)'}</div>
                             <div>users.sort(Comparator.comparing(</div>
                             <div className="ml-4">User::getDateOfBirth).reversed());</div>
-                            
+
                             <div className="mt-3 text-blue-600">{'// Складне: дата народження, потім ім\'я'}</div>
                             <div>users.sort(Comparator.comparing(User::getDateOfBirth)</div>
                             <div className="ml-8">.thenComparing(User::getName));</div>
-                            
+
                             <div className="mt-3 text-blue-600">{'// Null-safe сортування'}</div>
                             <div>users.sort(Comparator.comparing(</div>
                             <div className="ml-4">User::getDateOfBirth, </div>
                             <div className="ml-4">Comparator.nullsLast(</div>
                             <div className="ml-8">Comparator.naturalOrder())));</div>
-                            
+
                             <div className="mt-3 text-blue-600">{'// За довжиною імені, потім за ім\'ям'}</div>
                             <div>users.sort(Comparator.comparingInt(</div>
                             <div className="ml-8">u -&gt; u.getName().length())</div>
@@ -1153,10 +1160,10 @@ const FunctionalPresentation = () => {
                             <h4 className="font-bold text-blue-700 mb-3">Lambda та Method References</h4>
                             <ul className="space-y-2 text-sm text-gray-700">
                                 <li>• Lambda: (params) -&gt; expression</li>
-                                <li>• Static: ClassName::method</li>
-                                <li>• Instance: object::method</li>
-                                <li>• На параметрі: ClassName::method</li>
-                                <li>• Constructor: ClassName::new</li>
+                                <li>• Статичний метод: ClassName::method</li>
+                                <li>• Метод конкретного об'єкта: object::method</li>
+                                <li>• Метод довільного об'єкта типу: ClassName::method</li>
+                                <li>• Конструктор: ClassName::new</li>
                             </ul>
                         </div>
                     </div>
